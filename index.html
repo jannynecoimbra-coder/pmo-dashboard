@@ -87,7 +87,7 @@ header span{
   flex-wrap: wrap;
 }
 
-.btn-refresh {
+.btn-refresh, .btn-clear-filters {
   background: var(--panel);
   border: 1px solid var(--border);
   color: var(--text);
@@ -109,7 +109,19 @@ header span{
   border-color: var(--blue);
 }
 
-.btn-refresh i {
+.btn-clear-filters {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+  display: none;
+}
+
+.btn-clear-filters:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.btn-refresh i, .btn-clear-filters i {
   font-size: 14px;
 }
 
@@ -120,6 +132,39 @@ header span{
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* Filtros Ativos */
+.active-filters {
+  background: var(--panel);
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  display: none;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-left: 4px solid var(--blue);
+}
+
+.active-filters .filter-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.active-filters .filter-tag {
+  background: var(--blue);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* KPIs */
@@ -138,12 +183,19 @@ header span{
   text-align:center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid transparent;
+  cursor: pointer;
+  position: relative;
 }
 
 .kpi:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-  border-color: var(--border);
+  border-color: var(--blue);
+}
+
+.kpi.active {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
 }
 
 .kpi i{
@@ -164,6 +216,18 @@ header span{
   font-weight:800;
 }
 
+.kpi-hint {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.kpi:hover .kpi-hint {
+  opacity: 1;
+}
+
 /* Charts */
 .charts{
   display:grid;
@@ -177,17 +241,77 @@ header span{
   border-radius:18px;
   padding:24px;
   box-shadow:var(--shadow);
-  height:350px;
+  height:380px;
   display: flex;
   flex-direction: column;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
 .chart-title{
   font-size:13px;
   font-weight:700;
-  margin-bottom:16px;
   color: var(--text);
 }
+
+.chart-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.chart-select {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  background: white;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chart-select:hover {
+  border-color: var(--blue);
+}
+
+.chart-select:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.chart-info {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  display: none;
+}
+
+.chart-info.show {
+  display: block;
+}
+
+.semaforo-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.semaforo-verde { background: var(--green); }
+.semaforo-amarelo { background: var(--yellow); }
+.semaforo-vermelho { background: var(--red); }
 
 .chart-container {
   flex: 1;
@@ -208,27 +332,35 @@ table{
   width:100%;
   border-collapse:collapse;
   font-size:14px;
-  min-width: 800px;
+  min-width: 900px;
 }
 
 th{
   background:#fafafa;
-  padding:16px;
+  padding:16px 12px;
   font-size:11px;
   text-transform:uppercase;
   color:var(--muted);
   text-align:left;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-th:nth-child(2), td:nth-child(2),
-th:nth-child(3), td:nth-child(3),
-th:nth-child(5), td:nth-child(5) {
-  text-align: center;
-}
+th:nth-child(1) { width: 25%; }
+th:nth-child(2) { width: 12%; text-align: center; }
+th:nth-child(3) { width: 12%; text-align: center; }
+th:nth-child(4) { width: 15%; text-align: center; }
+th:nth-child(5) { width: 20%; }
+th:nth-child(6) { width: 8%; text-align: center; }
 
 td{
-  padding:14px 16px;
+  padding:14px 12px;
   border-top:1px solid var(--border);
+}
+
+td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(6) {
+  text-align: center;
 }
 
 tr:hover{background:#f8fafc}
@@ -373,12 +505,31 @@ tr:hover{background:#f8fafc}
   box-shadow: var(--shadow);
 }
 
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+}
+
+.no-results i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.no-results h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   body { padding: 15px; }
   header { flex-direction: column; align-items: flex-start; }
   .kpis { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
   .charts { grid-template-columns: 1fr; }
+  .chart-box { height: 320px; }
 }
 </style>
 </head>
@@ -391,6 +542,9 @@ tr:hover{background:#f8fafc}
 <header>
   <h1>OKVENDAS <span>PMO</span></h1>
   <div class="header-actions">
+    <button class="btn-clear-filters" id="btnClearFilters" onclick="clearAllFilters()">
+      <i class="fa-solid fa-filter-circle-xmark"></i> Limpar Filtros
+    </button>
     <button class="btn-refresh" onclick="fetchData()">
       <i class="fa-solid fa-arrows-rotate" id="refresh-icon"></i> Atualizar Dados
     </button>
@@ -401,17 +555,64 @@ tr:hover{background:#f8fafc}
   </div>
 </header>
 
+<div class="active-filters" id="activeFilters">
+  <span class="filter-label"><i class="fa-solid fa-filter"></i> Filtros ativos:</span>
+  <div id="filterTags"></div>
+</div>
+
 <div class="kpis">
-  <div class="kpi"><i class="fa-solid fa-folder-tree"></i><h3>Total Projetos</h3><p id="kTotal">0</p></div>
-  <div class="kpi"><i class="fa-solid fa-rocket"></i><h3>Ativos</h3><p id="kAtivos">0</p></div>
-  <div class="kpi"><i class="fa-solid fa-pause"></i><h3>Pausados</h3><p id="kPausados">0</p></div>
-  <div class="kpi"><i class="fa-solid fa-clock-rotate-left"></i><h3>Ag. Cliente</h3><p id="kCliente">0</p></div>
+  <div class="kpi" onclick="filterByStatus('all')">
+    <i class="fa-solid fa-folder-tree"></i>
+    <h3>Total Projetos</h3>
+    <p id="kTotal">0</p>
+    <div class="kpi-hint">Clique para ver todos</div>
+  </div>
+  <div class="kpi" onclick="filterByStatus('andamento')">
+    <i class="fa-solid fa-rocket"></i>
+    <h3>Em Andamento</h3>
+    <p id="kAtivos">0</p>
+    <div class="kpi-hint">Clique para filtrar</div>
+  </div>
+  <div class="kpi" onclick="filterByStatus('paralisado')">
+    <i class="fa-solid fa-pause"></i>
+    <h3>Pausados</h3>
+    <p id="kPausados">0</p>
+    <div class="kpi-hint">Clique para filtrar</div>
+  </div>
+  <div class="kpi" onclick="filterByStatus('cliente')">
+    <i class="fa-solid fa-clock-rotate-left"></i>
+    <h3>Ag. Cliente</h3>
+    <p id="kCliente">0</p>
+    <div class="kpi-hint">Clique para filtrar</div>
+  </div>
 </div>
 
 <div class="charts">
-  <div class="chart-box"><div class="chart-title">Acompanhamento Curva S</div><div class="chart-container"><canvas id="curve"></canvas></div></div>
-  <div class="chart-box"><div class="chart-title">Carga por Analista</div><div class="chart-container"><canvas id="analistas"></canvas></div></div>
-  <div class="chart-box"><div class="chart-title">Distribuição de Status</div><div class="chart-container"><canvas id="status"></canvas></div></div>
+  <div class="chart-box">
+    <div class="chart-header">
+      <div class="chart-title">Acompanhamento Curva S</div>
+      <select class="chart-select" id="projectSelect" onchange="updateCurvaS()">
+        <option value="all">Visão Geral</option>
+      </select>
+    </div>
+    <div class="chart-container"><canvas id="curve"></canvas></div>
+    <div class="chart-info" id="curvaInfo"></div>
+  </div>
+  
+  <div class="chart-box">
+    <div class="chart-header">
+      <div class="chart-title">Carga por Analista</div>
+      <div style="font-size:10px;color:var(--muted)">Clique nas barras para filtrar</div>
+    </div>
+    <div class="chart-container"><canvas id="analistas"></canvas></div>
+  </div>
+  
+  <div class="chart-box">
+    <div class="chart-header">
+      <div class="chart-title">Distribuição de Status</div>
+    </div>
+    <div class="chart-container"><canvas id="status"></canvas></div>
+  </div>
 </div>
 
 <div class="table-box">
@@ -421,6 +622,7 @@ tr:hover{background:#f8fafc}
   <th>Projeto</th>
   <th>Analista</th>
   <th>Status</th>
+  <th>Data Prevista</th>
   <th>Evolução</th>
   <th>Info</th>
 </tr>
@@ -445,6 +647,11 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSN6220bH
 
 let projectData = [];
 let charts = {};
+let currentFilters = {
+  analista: null,
+  status: null,
+  projeto: null
+};
 
 // ========== FUNÇÕES AUXILIARES ==========
 function cleanKey(str) {
@@ -468,16 +675,38 @@ function getAnalistaClass(nome) {
   return 'color-default';
 }
 
+function getAnalistaColor(nome) {
+  if (!nome) return '#94a3b8';
+  const n = cleanKey(nome);
+  
+  if (n.includes('abraao')) return '#FFB800';
+  if (n.includes('dalto')) return '#f97316';
+  if (n.includes('jonathas')) return '#38bdf8';
+  if (n.includes('lucas')) return '#0369a1';
+  if (n.includes('efraim')) return '#0d9488';
+  if (n.includes('cristhian')) return '#475569';
+  if (n.includes('ernane')) return '#1e3a8a';
+  if (n.includes('william')) return '#16a34a';
+  
+  return '#94a3b8';
+}
+
 function getStatusColor(status) {
   const s = cleanKey(status);
   
-  if (s.includes('andamento')) return '#10b981'; // Verde
-  if (s.includes('paralisado')) return '#ef4444'; // Vermelho
-  if (s.includes('cliente')) return '#8b5cf6'; // Roxo
-  if (s.includes('planejado')) return '#94a3b8'; // Cinza
-  if (s.includes('concluido')) return '#0ea5e9'; // Azul
+  if (s.includes('andamento')) return '#10b981';
+  if (s.includes('paralisado')) return '#ef4444';
+  if (s.includes('cliente')) return '#8b5cf6';
+  if (s.includes('planejado')) return '#94a3b8';
+  if (s.includes('concluido')) return '#0ea5e9';
   
-  return '#f59e0b'; // Amarelo (default)
+  return '#f59e0b';
+}
+
+function getSemaforoColor(diferenca) {
+  if (Math.abs(diferenca) <= 10) return 'verde';
+  if (Math.abs(diferenca) <= 25) return 'amarelo';
+  return 'vermelho';
 }
 
 // ========== PARSER CSV ROBUSTO ==========
@@ -560,6 +789,7 @@ async function fetchData() {
       status: findCol(['status', 'situacao']),
       analista: findCol(['analista', 'responsavel']),
       obs: findCol(['obs', 'observacao', 'observacoes']),
+      dataPrevista: findCol(['data prevista', 'previsao', 'prazo']),
       concluidas: findCol(['concluidas', 'concluida']),
       validacao: findCol(['em validacao', 'validacao']),
       liberacao: findCol(['ag liberacao', 'liberacao', 'ag. liberacao']),
@@ -574,12 +804,10 @@ async function fetchData() {
     for (let i = 1; i < lines.length; i++) {
       const values = parseCSVLine(lines[i]);
       
-      // Validar linha
       if (colIdx.projeto < 0 || !values[colIdx.projeto] || values[colIdx.projeto].trim() === "") {
         continue;
       }
       
-      // Extrair valores
       const getValue = (idx, defaultVal = "") => {
         return idx >= 0 && values[idx] ? values[idx].trim() : defaultVal;
       };
@@ -595,6 +823,7 @@ async function fetchData() {
       const status = getValue(colIdx.status, "Planejado");
       const analista = getValue(colIdx.analista, "N/A");
       const obs = getValue(colIdx.obs, "Sem observações.");
+      const dataPrevista = getValue(colIdx.dataPrevista, "-");
       
       const concluidas = getNumber(colIdx.concluidas);
       const validacao = getNumber(colIdx.validacao);
@@ -609,11 +838,15 @@ async function fetchData() {
         Projeto: projeto,
         Status: status,
         Analista: analista,
+        DataPrevista: dataPrevista,
         Concluidas: concluidas,
         Total: total,
         Obs: obs
       });
     }
+    
+    // Popular select de projetos
+    populateProjectSelect();
     
     // Renderizar tudo
     renderAll();
@@ -627,11 +860,133 @@ async function fetchData() {
   }
 }
 
+// ========== POPULAR SELECT DE PROJETOS ==========
+function populateProjectSelect() {
+  const select = document.getElementById('projectSelect');
+  select.innerHTML = '<option value="all">Visão Geral</option>';
+  
+  projectData.forEach(p => {
+    const option = document.createElement('option');
+    option.value = p.Projeto;
+    option.textContent = p.Projeto;
+    select.appendChild(option);
+  });
+}
+
+// ========== FILTROS ==========
+function filterByAnalista(analista) {
+  if (currentFilters.analista === analista) {
+    currentFilters.analista = null;
+  } else {
+    currentFilters.analista = analista;
+  }
+  updateFilters();
+}
+
+function filterByStatus(status) {
+  if (status === 'all') {
+    currentFilters.status = null;
+  } else if (currentFilters.status === status) {
+    currentFilters.status = null;
+  } else {
+    currentFilters.status = status;
+  }
+  updateFilters();
+}
+
+function clearAllFilters() {
+  currentFilters = {
+    analista: null,
+    status: null,
+    projeto: null
+  };
+  document.getElementById('projectSelect').value = 'all';
+  updateFilters();
+}
+
+function updateFilters() {
+  renderAll();
+  updateFilterDisplay();
+  
+  // Scroll suave até a tabela se houver filtro ativo
+  if (currentFilters.analista || currentFilters.status) {
+    setTimeout(() => {
+      document.querySelector('.table-box').scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }, 300);
+  }
+}
+
+function updateFilterDisplay() {
+  const activeFiltersEl = document.getElementById('activeFilters');
+  const filterTagsEl = document.getElementById('filterTags');
+  const btnClearFilters = document.getElementById('btnClearFilters');
+  
+  const hasFilters = currentFilters.analista || currentFilters.status;
+  
+  if (hasFilters) {
+    activeFiltersEl.style.display = 'flex';
+    btnClearFilters.style.display = 'flex';
+    
+    let tags = '';
+    
+    if (currentFilters.analista) {
+      tags += `<span class="filter-tag">Analista: ${currentFilters.analista}</span>`;
+    }
+    
+    if (currentFilters.status) {
+      const statusLabel = {
+        'andamento': 'Em Andamento',
+        'paralisado': 'Paralisado',
+        'cliente': 'Ag. Cliente'
+      };
+      tags += `<span class="filter-tag">Status: ${statusLabel[currentFilters.status] || currentFilters.status}</span>`;
+    }
+    
+    filterTagsEl.innerHTML = tags;
+  } else {
+    activeFiltersEl.style.display = 'none';
+    btnClearFilters.style.display = 'none';
+  }
+  
+  // Atualizar KPIs ativos
+  document.querySelectorAll('.kpi').forEach(kpi => kpi.classList.remove('active'));
+  if (currentFilters.status === 'andamento') {
+    document.querySelectorAll('.kpi')[1].classList.add('active');
+  } else if (currentFilters.status === 'paralisado') {
+    document.querySelectorAll('.kpi')[2].classList.add('active');
+  } else if (currentFilters.status === 'cliente') {
+    document.querySelectorAll('.kpi')[3].classList.add('active');
+  } else if (!currentFilters.status) {
+    document.querySelectorAll('.kpi')[0].classList.add('active');
+  }
+}
+
+function getFilteredData() {
+  let filtered = [...projectData];
+  
+  if (currentFilters.analista) {
+    filtered = filtered.filter(p => p.Analista === currentFilters.analista);
+  }
+  
+  if (currentFilters.status) {
+    filtered = filtered.filter(p => {
+      const s = cleanKey(p.Status);
+      return s.includes(currentFilters.status);
+    });
+  }
+  
+  return filtered;
+}
+
 // ========== RENDERIZAR TUDO ==========
 function renderAll() {
-  renderTable(projectData);
-  renderKPIs(projectData);
-  renderCharts(projectData);
+  const filtered = getFilteredData();
+  renderTable(filtered);
+  renderKPIs(projectData); // KPIs sempre mostram dados completos
+  renderCharts(filtered);
 }
 
 // ========== RENDERIZAR TABELA ==========
@@ -639,7 +994,16 @@ function renderTable(p){
   const tb = document.getElementById("tbody");
   
   if (p.length === 0) {
-    tb.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--muted)">Nenhum projeto encontrado</td></tr>';
+    tb.innerHTML = `
+      <tr>
+        <td colspan="6">
+          <div class="no-results">
+            <i class="fa-solid fa-inbox"></i>
+            <h3>Nenhum projeto encontrado</h3>
+            <p style="margin-top:8px;font-size:13px">Tente ajustar os filtros ou limpar a busca</p>
+          </div>
+        </td>
+      </tr>`;
     return;
   }
   
@@ -653,6 +1017,7 @@ function renderTable(p){
       <td><strong>${x.Projeto}</strong></td>
       <td class="analista-bold ${analistaColorClass}">${x.Analista}</td>
       <td><span class="badge ${statusClass}">${x.Status}</span></td>
+      <td>${x.DataPrevista}</td>
       <td><div class="progress"><div class="bar"><div class="fill" style="width:${perc}%"></div></div><strong style="width:35px;text-align:right">${perc}%</strong></div></td>
       <td><i class="fa-solid fa-circle-info" style="cursor:pointer;color:var(--blue)" onclick='openModal(\`${x.Projeto}\`,\`${x.Obs}\`)'></i></td>
     </tr>`;
@@ -669,7 +1034,12 @@ function renderKPIs(p){
 
 // ========== RENDERIZAR GRÁFICOS ==========
 function renderCharts(p){
-  if (p.length === 0) return;
+  if (p.length === 0) {
+    // Destruir gráficos se não houver dados
+    Object.values(charts).forEach(c => c.destroy());
+    charts = {};
+    return;
+  }
   
   // Contagens
   const analistasCount = {};
@@ -683,14 +1053,17 @@ function renderCharts(p){
   // Destruir gráficos antigos
   Object.values(charts).forEach(c => c.destroy());
 
-  // Gráfico de Analistas
+  // Gráfico de Analistas - COM CORES E INTERATIVIDADE
+  const analistaLabels = Object.keys(analistasCount);
+  const analistaColors = analistaLabels.map(nome => getAnalistaColor(nome));
+  
   charts.analistas = new Chart(document.getElementById('analistas'), {
     type: 'bar',
     data: {
-      labels: Object.keys(analistasCount),
+      labels: analistaLabels,
       datasets: [{ 
         data: Object.values(analistasCount), 
-        backgroundColor: '#0ea5e9', 
+        backgroundColor: analistaColors,
         borderRadius: 6, 
         barThickness: 20 
       }]
@@ -698,7 +1071,14 @@ function renderCharts(p){
     options: { 
       indexAxis: 'y', 
       responsive: true, 
-      maintainAspectRatio: false, 
+      maintainAspectRatio: false,
+      onClick: (event, elements) => {
+        if (elements.length > 0) {
+          const index = elements[0].index;
+          const analista = analistaLabels[index];
+          filterByAnalista(analista);
+        }
+      },
       plugins: { 
         legend: { display: false },
         tooltip: {
@@ -753,11 +1133,65 @@ function renderCharts(p){
     }
   });
 
-  // Curva S
-  const mediaGeral = p.length > 0 
-    ? Math.round(p.reduce((acc, curr) => acc + (curr.Total > 0 ? (curr.Concluidas/curr.Total)*100 : 0), 0) / p.length) 
-    : 0;
+  // Curva S - atualizar
+  updateCurvaS();
+}
+
+// ========== ATUALIZAR CURVA S ==========
+function updateCurvaS() {
+  const select = document.getElementById('projectSelect');
+  const selectedProject = select.value;
+  const curvaInfoEl = document.getElementById('curvaInfo');
+  
+  let data, label, cor, diferenca;
+  
+  if (selectedProject === 'all') {
+    // Visão geral
+    const filtered = getFilteredData();
+    const mediaGeral = filtered.length > 0 
+      ? Math.round(filtered.reduce((acc, curr) => acc + (curr.Total > 0 ? (curr.Concluidas/curr.Total)*100 : 0), 0) / filtered.length) 
+      : 0;
     
+    diferenca = 100 - mediaGeral;
+    const semaforo = getSemaforoColor(diferenca);
+    cor = semaforo === 'verde' ? '#10b981' : semaforo === 'amarelo' ? '#f59e0b' : '#ef4444';
+    
+    data = [0, mediaGeral];
+    label = 'Realizado (Média Geral)';
+    
+    curvaInfoEl.innerHTML = `
+      <span class="semaforo-indicator semaforo-${semaforo}"></span>
+      <strong>Diferença: ${diferenca.toFixed(1)}%</strong> entre planejado e realizado
+    `;
+    curvaInfoEl.classList.add('show');
+    
+  } else {
+    // Projeto específico
+    const projeto = projectData.find(p => p.Projeto === selectedProject);
+    
+    if (projeto) {
+      const percRealizado = projeto.Total > 0 ? Math.round((projeto.Concluidas/projeto.Total)*100) : 0;
+      diferenca = 100 - percRealizado;
+      const semaforo = getSemaforoColor(diferenca);
+      cor = semaforo === 'verde' ? '#10b981' : semaforo === 'amarelo' ? '#f59e0b' : '#ef4444';
+      
+      data = [0, percRealizado];
+      label = `Realizado (${projeto.Projeto})`;
+      
+      curvaInfoEl.innerHTML = `
+        <span class="semaforo-indicator semaforo-${semaforo}"></span>
+        <strong>Diferença: ${diferenca.toFixed(1)}%</strong> entre planejado e realizado | 
+        <strong>${projeto.Concluidas}/${projeto.Total}</strong> atividades concluídas
+      `;
+      curvaInfoEl.classList.add('show');
+    }
+  }
+  
+  // Atualizar gráfico
+  if (charts.curve) {
+    charts.curve.destroy();
+  }
+  
   charts.curve = new Chart(document.getElementById('curve'), {
     type: 'line',
     data: {
@@ -774,10 +1208,10 @@ function renderCharts(p){
           pointRadius: 4
         },
         { 
-          label: 'Realizado', 
-          data: [0, mediaGeral], 
-          borderColor: '#10b981', 
-          backgroundColor: 'rgba(16, 185, 129, 0.1)', 
+          label: label, 
+          data: data, 
+          borderColor: cor, 
+          backgroundColor: cor + '20', 
           fill: true, 
           tension: 0.4,
           pointRadius: 5,
@@ -836,6 +1270,11 @@ window.onload = fetchData;
 
 // Auto-atualização a cada 5 minutos
 setInterval(fetchData, 300000);
+
+// Limpar filtros ao sair da página
+window.addEventListener('beforeunload', () => {
+  clearAllFilters();
+});
 </script>
 </body>
 </html>
