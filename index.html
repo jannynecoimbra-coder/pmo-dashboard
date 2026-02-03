@@ -161,8 +161,8 @@ header span{
 
 .kpis{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:16px;
   margin-bottom:30px;
 }
 
@@ -608,7 +608,7 @@ tr:hover{background:#f8fafc}
 .floating-buttons {
   position: fixed;
   bottom: 20px;
-  left: 20px;
+  right: 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -677,7 +677,7 @@ tr:hover{background:#f8fafc}
 .float-btn::before {
   content: attr(data-tooltip);
   position: absolute;
-  left: 70px;
+  right: 70px;
   background: var(--text);
   color: white;
   padding: 8px 12px;
@@ -694,9 +694,9 @@ tr:hover{background:#f8fafc}
 .float-btn::after {
   content: '';
   position: absolute;
-  left: 60px;
+  right: 60px;
   border: 6px solid transparent;
-  border-right-color: var(--text);
+  border-left-color: var(--text);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s;
@@ -710,7 +710,7 @@ tr:hover{background:#f8fafc}
 .debug-panel {
   position: fixed;
   bottom: 170px;
-  left: 20px;
+  right: 20px;
   width: 500px;
   max-width: calc(100vw - 40px);
   max-height: 400px;
@@ -775,8 +775,8 @@ tr:hover{background:#f8fafc}
   .kpis { grid-template-columns: 1fr; }
   .charts { grid-template-columns: 1fr; }
   .table-box { padding: 16px; }
-  .debug-panel { width: calc(100vw - 40px); bottom: 150px; }
-  .floating-buttons { bottom: 12px; left: 12px; }
+  .debug-panel { width: calc(100vw - 40px); bottom: 150px; right: 12px; }
+  .floating-buttons { bottom: 12px; right: 12px; }
   .float-btn { width: 50px; height: 50px; font-size: 18px; }
   .modal-content { padding: 24px; }
 }
@@ -1443,12 +1443,19 @@ function updateAnalistaChart() {
   const select = document.getElementById('analistaSelect');
   const selectedAnalista = select.value;
   
-  let dataToShow = getFilteredData();
-  
-  // Se selecionou um analista específico no dropdown
+  // Aplicar filtro quando selecionar um analista específico
   if (selectedAnalista !== 'all') {
-    dataToShow = dataToShow.filter(p => p.Analista === selectedAnalista);
+    currentFilters.analista = selectedAnalista;
+    updateFilters();
+    return; // updateFilters já vai chamar renderAll que inclui updateAnalistaChart
+  } else if (currentFilters.analista) {
+    // Limpar filtro de analista se voltar para "Todos"
+    currentFilters.analista = null;
+    updateFilters();
+    return;
   }
+  
+  let dataToShow = getFilteredData();
   
   const analistasCount = {};
   dataToShow.forEach(x => {
@@ -1470,12 +1477,6 @@ function updateAnalistaChart() {
       indexAxis: 'y',
       responsive: true,
       maintainAspectRatio: false,
-      onClick: (e, elements) => {
-        if (elements.length > 0) {
-          const analista = analistaLabels[elements[0].index];
-          filterByAnalista(analista);
-        }
-      },
       plugins: {
         legend: { display: false },
         tooltip: { callbacks: { label: (ctx) => `${ctx.parsed.x} projeto(s)` } }
