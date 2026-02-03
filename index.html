@@ -57,6 +57,77 @@ body{
 
 .container{max-width:1400px;margin:auto}
 
+/* ERROR MESSAGE */
+.error-banner {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border: 2px solid var(--red);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+  display: none;
+}
+
+.error-banner.show {
+  display: block;
+}
+
+.error-banner h2 {
+  color: var(--red);
+  margin-bottom: 12px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.error-banner p {
+  margin-bottom: 8px;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.error-banner .solution {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.error-banner .solution h3 {
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.error-banner .solution ol {
+  margin-left: 20px;
+  line-height: 1.8;
+  font-size: 13px;
+}
+
+.error-banner .solution li {
+  margin-bottom: 8px;
+}
+
+.error-banner .test-url {
+  background: #1e293b;
+  color: #94a3b8;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  margin-top: 12px;
+  word-break: break-all;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.error-banner .test-url:hover {
+  background: #334155;
+  color: white;
+}
+
 header{
   display:flex;
   justify-content:space-between;
@@ -116,6 +187,53 @@ header span{
 .btn-clear-filters:hover {
   filter: brightness(1.1);
   transform: translateY(-2px);
+}
+
+/* GLOBAL PROJECT FILTER */
+.global-project-filter {
+  background: var(--panel);
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-left: 4px solid var(--purple);
+}
+
+.global-project-filter label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.global-project-filter select {
+  flex: 1;
+  min-width: 250px;
+  padding: 10px 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  background: white;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.global-project-filter select:hover {
+  border-color: var(--purple);
+}
+
+.global-project-filter select:focus {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
 .spinning {
@@ -241,28 +359,37 @@ header span{
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  gap: 12px;
 }
 
 .chart-title{
   font-size:13px;
   font-weight:700;
   color: var(--text);
+  white-space: nowrap;
 }
 
 .chart-select {
-  padding: 6px 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  padding: 8px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
   font-size: 12px;
   font-weight: 600;
   background: white;
   color: var(--text);
   cursor: pointer;
   transition: all 0.2s;
+  min-width: 150px;
 }
 
 .chart-select:hover {
   border-color: var(--blue);
+}
+
+.chart-select:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
 }
 
 .chart-info {
@@ -295,103 +422,92 @@ header span{
   flex: 1;
   position: relative;
   min-height: 0;
-  width: 100%;
 }
 
 .table-box{
   background:var(--panel);
   border-radius:18px;
+  padding:24px;
   box-shadow:var(--shadow);
-  overflow-x: auto;
+  overflow-x:auto;
+  margin-top:30px;
+}
+
+.table-title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:20px;
+  color:var(--text);
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  font-size:14px;
-  min-width: 900px;
+  font-size:13px;
 }
 
-th{
-  background:#fafafa;
-  padding:16px 12px;
-  font-size:11px;
-  text-transform:uppercase;
-  color:var(--muted);
-  text-align:left;
+thead{
+  background:#f8fafc;
   position: sticky;
   top: 0;
   z-index: 10;
 }
 
-th:nth-child(1) { width: 25%; }
-th:nth-child(2) { width: 12%; text-align: center; }
-th:nth-child(3) { width: 12%; text-align: center; }
-th:nth-child(4) { width: 15%; text-align: center; }
-th:nth-child(5) { width: 20%; }
-th:nth-child(6) { width: 8%; text-align: center; }
+th{
+  text-align:left;
+  padding:14px;
+  font-weight:700;
+  color:var(--text);
+  border-bottom:2px solid var(--border);
+}
 
 td{
-  padding:14px 12px;
-  border-top:1px solid var(--border);
+  padding:14px;
+  border-bottom:1px solid #f1f5f9;
 }
 
-td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(6) {
-  text-align: center;
+tbody tr{
+  transition: background-color 0.2s ease;
 }
 
-tr:hover{background:#f8fafc}
+tbody tr:hover{
+  background: #f8fafc;
+}
 
 .badge{
+  display:inline-block;
   padding:6px 12px;
   border-radius:20px;
   font-size:11px;
-  font-weight:600;
-  display: inline-block;
-  white-space: nowrap;
+  font-weight:700;
+  text-transform: uppercase;
 }
 
-.em-andamento{
-  background:var(--status-andamento-bg);
-  color:var(--status-andamento-text);
+.badge.emandamento, .badge.andamento {
+  background: var(--status-andamento-bg);
+  color: var(--status-andamento-text);
 }
-
-.paralisado{
-  background:var(--status-paralisado-bg);
-  color:var(--status-paralisado-text);
+.badge.paralisado {
+  background: var(--status-paralisado-bg);
+  color: var(--status-paralisado-text);
 }
-
-.ag-cliente{
-  background:var(--status-cliente-bg) !important;
-  color:var(--status-cliente-text) !important;
-  border: 1px solid #e9d5ff !important;
+.badge.agcliente, .badge.aguardandocliente {
+  background: var(--status-cliente-bg);
+  color: var(--status-cliente-text);
 }
-
-.planejado{
-  background:var(--status-planejado-bg);
-  color:var(--status-planejado-text);
+.badge.planejado {
+  background: var(--status-planejado-bg);
+  color: var(--status-planejado-text);
 }
-
-.concluido{
-  background:var(--status-concluido-bg);
-  color:var(--status-concluido-text);
+.badge.concluido {
+  background: var(--status-concluido-bg);
+  color: var(--status-concluido-text);
 }
-
-.analista-bold { font-weight: 800; }
-.color-abraao { color: var(--color-abraao) !important; }
-.color-dalto { color: var(--color-dalto) !important; } 
-.color-jonathas { color: var(--color-jonathas) !important; } 
-.color-lucas { color: var(--color-lucas) !important; }       
-.color-efraim { color: var(--color-efraim) !important; }     
-.color-cristhian { color: var(--color-cristhian) !important; }  
-.color-ernane { color: var(--color-ernane) !important; }       
-.color-william { color: var(--color-william) !important; }     
-.color-default { color: var(--text) !important; }
 
 .progress{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
 }
 
 .bar{
@@ -404,132 +520,102 @@ tr:hover{background:#f8fafc}
 
 .fill{
   height:100%;
-  background:linear-gradient(90deg, var(--blue), var(--green));
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  border-radius:10px;
+  transition:width 0.5s ease;
 }
 
+.analista-bold {
+  font-weight: 700;
+}
+
+.color-abraao { color: var(--color-abraao); }
+.color-dalto { color: var(--color-dalto); }
+.color-jonathas { color: var(--color-jonathas); }
+.color-lucas { color: var(--color-lucas); }
+.color-efraim { color: var(--color-efraim); }
+.color-cristhian { color: var(--color-cristhian); }
+.color-ernane { color: var(--color-ernane); }
+.color-william { color: var(--color-william); }
+.color-default { color: var(--muted); }
+
 #modal{
-  position:fixed;
-  inset:0;
-  background:rgba(15,23,42,0.4);
-  backdrop-filter: blur(4px);
   display:none;
-  justify-content:center;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter: blur(5px);
   align-items:center;
-  z-index: 1000;
+  justify-content:center;
+  z-index:1000;
+  padding: 20px;
 }
 
 .modal-content{
-  background:#fff;
-  padding:28px;
+  background:white;
+  padding:32px;
   border-radius:20px;
-  width:90%;
-  max-width:420px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.2);
-  transform: scale(0.9);
-  animation: modalIn 0.3s forwards;
+  max-width:600px;
+  width: 100%;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+  animation: modalSlide 0.3s ease;
 }
 
-@keyframes modalIn {
-  to { transform: scale(1); }
+@keyframes modalSlide {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .modal-content h2{
-  margin-bottom:12px;
-  color: var(--blue);
+  margin-bottom:16px;
+  color:var(--text);
+  font-size: 20px;
 }
 
 .modal-content p{
-  line-height:1.6;
-  color: var(--text);
-  white-space: pre-wrap;
+  color:var(--muted);
+  line-height:1.7;
+  font-size: 14px;
 }
 
 .btn-modal{
-  border:none;
+  margin-top:24px;
+  padding:12px 24px;
   background:var(--blue);
-  color:#fff;
-  padding:12px;
+  color:white;
+  border:none;
   border-radius:12px;
-  width:100%;
   font-weight:700;
-  margin-top:20px;
   cursor:pointer;
   transition: all 0.2s;
+  font-size: 14px;
 }
 
-.btn-modal:hover { 
-  filter: brightness(1.1);
+.btn-modal:hover{
+  background:var(--text);
   transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-#loading {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background: var(--blue);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  display: none;
-  z-index: 1100;
-  box-shadow: var(--shadow);
-}
-
-#debugPanel {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  background: rgba(0, 0, 0, 0.9);
-  color: #00ff00;
-  padding: 12px;
-  border-radius: 8px;
-  font-family: 'Courier New', monospace;
-  font-size: 11px;
-  max-width: 400px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 1100;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+.loading {
+  text-align: center;
+  padding: 60px 20px;
   display: none;
 }
 
-#debugPanel .debug-line {
-  margin: 2px 0;
-  line-height: 1.4;
+.loading i {
+  font-size: 48px;
+  color: var(--blue);
+  animation: spin 2s linear infinite;
 }
 
-#debugPanel .debug-error {
-  color: #ff4444;
-}
-
-#debugPanel .debug-success {
-  color: #00ff00;
-}
-
-#debugPanel .debug-warning {
-  color: #ffaa00;
-}
-
-#debugToggle {
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 11px;
-  cursor: pointer;
-  z-index: 1100;
-  font-family: monospace;
-}
-
-#debugToggle:hover {
-  background: rgba(0, 0, 0, 0.9);
+.loading p {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 14px;
 }
 
 .no-results {
@@ -539,8 +625,8 @@ tr:hover{background:#f8fafc}
 }
 
 .no-results i {
-  font-size: 48px;
-  margin-bottom: 16px;
+  font-size: 64px;
+  margin-bottom: 20px;
   opacity: 0.3;
 }
 
@@ -550,100 +636,295 @@ tr:hover{background:#f8fafc}
   color: var(--text);
 }
 
+/* FLOATING BUTTONS */
+.floating-buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+}
+
+.float-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  position: relative;
+}
+
+.float-btn:hover {
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.float-btn:active {
+  transform: scale(0.95);
+}
+
+.debug-btn {
+  background: var(--text);
+  color: white;
+}
+
+.debug-btn:hover {
+  background: var(--blue);
+}
+
+.scroll-top-btn {
+  background: var(--green);
+  color: white;
+  display: none;
+}
+
+.scroll-top-btn.show {
+  display: flex;
+  animation: fadeInUp 0.3s ease;
+}
+
+.scroll-top-btn:hover {
+  background: var(--blue);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tooltip para os botões flutuantes */
+.float-btn::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 70px;
+  background: var(--text);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.float-btn::after {
+  content: '';
+  position: absolute;
+  left: 60px;
+  border: 6px solid transparent;
+  border-right-color: var(--text);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.float-btn:hover::before,
+.float-btn:hover::after {
+  opacity: 1;
+}
+
+.debug-panel {
+  position: fixed;
+  bottom: 170px;
+  left: 20px;
+  width: 500px;
+  max-width: calc(100vw - 40px);
+  max-height: 400px;
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  display: none;
+  flex-direction: column;
+  z-index: 998;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  overflow-y: auto;
+}
+
+.debug-line {
+  padding: 4px 0;
+  color: #94a3b8;
+  border-bottom: 1px solid #334155;
+}
+
+.debug-error { color: #ef4444; font-weight: 600; }
+.debug-success { color: #10b981; }
+.debug-warning { color: #f59e0b; }
+
+.auto-sync {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.auto-sync i {
+  color: var(--green);
+}
+
 @media (max-width: 768px) {
-  body { padding: 15px; }
+  body { padding: 12px; }
   header { flex-direction: column; align-items: flex-start; }
-  .kpis { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .kpis { grid-template-columns: 1fr; }
   .charts { grid-template-columns: 1fr; }
-  .chart-box { height: 320px; }
+  .table-box { padding: 16px; overflow-x: scroll; }
+  .debug-panel { width: calc(100vw - 40px); bottom: 150px; }
+  .floating-buttons { bottom: 12px; left: 12px; }
+  .float-btn { width: 50px; height: 50px; font-size: 18px; }
+  .float-btn::before { left: 60px; font-size: 11px; }
+  .float-btn::after { left: 52px; }
+  .global-project-filter { flex-direction: column; align-items: stretch; }
+  .global-project-filter select { min-width: 100%; }
 }
 </style>
 </head>
-
 <body>
-<div id="loading">🔄 Sincronizando dados...</div>
-<button id="debugToggle" onclick="toggleDebug()">🐛 DEBUG</button>
-<div id="debugPanel"></div>
-
 <div class="container">
 
-<header>
-  <h1>OKVENDAS <span>PMO</span></h1>
-  <div class="header-actions">
-    <button class="btn-clear-filters" id="btnClearFilters" onclick="clearAllFilters()">
-      <i class="fa-solid fa-filter-circle-xmark"></i> Limpar Filtros
-    </button>
-    <button class="btn-refresh" onclick="fetchData()">
-      <i class="fa-solid fa-arrows-rotate" id="refresh-icon"></i> Atualizar Dados
-    </button>
-    <div style="font-size:13px;color:var(--muted)">
-      <i class="fa-solid fa-circle" style="color:var(--green);font-size:8px"></i>
-      Auto-sincronização ativa
+<div id="errorBanner" class="error-banner">
+  <h2><i class="fa-solid fa-triangle-exclamation"></i> Erro ao Carregar Dashboard</h2>
+  <p id="errorMessage"></p>
+  
+  <div class="solution">
+    <h3><i class="fa-solid fa-lightbulb"></i> Como Resolver:</h3>
+    <ol>
+      <li>Abra sua planilha no Google Sheets</li>
+      <li>Clique em <strong>Arquivo > Compartilhar > Publicar na web</strong></li>
+      <li>Na primeira lista, selecione a aba: <strong>"Mapeamento Fora - Contrato"</strong></li>
+      <li>Na segunda lista, selecione: <strong>"Valores separados por vírgula (.csv)"</strong></li>
+      <li>Clique em <strong>"Publicar"</strong></li>
+      <li>Copie a URL gerada e substitua na linha 674 deste arquivo HTML</li>
+    </ol>
+    
+    <p style="margin-top: 12px; font-size: 12px;">
+      <strong>Teste sua URL:</strong> Clique no link abaixo para verificar se a planilha está acessível:
+    </p>
+    <div class="test-url" id="testUrl" onclick="window.open(this.textContent, '_blank')">
+      Carregando URL...
     </div>
   </div>
+</div>
+
+<header>
+<div>
+  <h1>OKVENDAS <span>PMO</span></h1>
+</div>
+<div class="header-actions">
+  <button class="btn-clear-filters" id="btnClearFilters" onclick="clearAllFilters()">
+    <i class="fa-solid fa-filter-circle-xmark"></i> Limpar Filtros
+  </button>
+  <button class="btn-refresh" onclick="fetchData()">
+    <i class="fa-solid fa-rotate" id="refresh-icon"></i> Atualizar Dados
+  </button>
+  <div class="auto-sync">
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Auto-sincronização ativa</span>
+  </div>
+</div>
 </header>
 
+<!-- FILTRO GLOBAL DE PROJETO -->
+<div class="global-project-filter">
+  <label>
+    <i class="fa-solid fa-filter"></i>
+    Filtrar por Projeto:
+  </label>
+  <select id="globalProjectSelect" onchange="filterByProject()">
+    <option value="all">📊 Todos os Projetos (Visão Geral)</option>
+  </select>
+</div>
+
 <div class="active-filters" id="activeFilters">
-  <span class="filter-label"><i class="fa-solid fa-filter"></i> Filtros ativos:</span>
+  <span class="filter-label">Filtros Ativos:</span>
   <div id="filterTags"></div>
 </div>
 
+<div class="loading" id="loading">
+  <i class="fa-solid fa-spinner"></i>
+  <p>Carregando dashboard...</p>
+</div>
+
 <div class="kpis">
-  <div class="kpi" onclick="filterByStatus('all')">
-    <i class="fa-solid fa-folder-tree"></i>
-    <h3>Total Projetos</h3>
-    <p id="kTotal">0</p>
-    <div class="kpi-hint">Clique para ver todos</div>
-  </div>
-  <div class="kpi" onclick="filterByStatus('andamento')">
-    <i class="fa-solid fa-rocket"></i>
-    <h3>Em Andamento</h3>
-    <p id="kAtivos">0</p>
-    <div class="kpi-hint">Clique para filtrar</div>
-  </div>
-  <div class="kpi" onclick="filterByStatus('paralisado')">
-    <i class="fa-solid fa-pause"></i>
-    <h3>Pausados</h3>
-    <p id="kPausados">0</p>
-    <div class="kpi-hint">Clique para filtrar</div>
-  </div>
-  <div class="kpi" onclick="filterByStatus('cliente')">
-    <i class="fa-solid fa-clock-rotate-left"></i>
-    <h3>Ag. Cliente</h3>
-    <p id="kCliente">0</p>
-    <div class="kpi-hint">Clique para filtrar</div>
-  </div>
+<div class="kpi active" onclick="filterByStatus('all')">
+  <i class="fa-solid fa-layer-group"></i>
+  <h3>Total Projetos</h3>
+  <p id="kTotal">0</p>
+  <div class="kpi-hint">Clique para ver todos</div>
+</div>
+<div class="kpi" onclick="filterByStatus('andamento')">
+  <i class="fa-solid fa-rocket"></i>
+  <h3>Em Andamento</h3>
+  <p id="kAtivos">0</p>
+  <div class="kpi-hint">Clique para filtrar</div>
+</div>
+<div class="kpi" onclick="filterByStatus('paralisado')">
+  <i class="fa-solid fa-pause"></i>
+  <h3>Pausados</h3>
+  <p id="kPausados">0</p>
+  <div class="kpi-hint">Clique para filtrar</div>
+</div>
+<div class="kpi" onclick="filterByStatus('cliente')">
+  <i class="fa-solid fa-clock-rotate-left"></i>
+  <h3>Ag. Cliente</h3>
+  <p id="kCliente">0</p>
+  <div class="kpi-hint">Clique para filtrar</div>
+</div>
 </div>
 
 <div class="charts">
-  <div class="chart-box">
-    <div class="chart-header">
-      <div class="chart-title">Acompanhamento Curva S</div>
-      <select class="chart-select" id="projectSelect" onchange="updateCurvaS()">
-        <option value="all">Visão Geral</option>
-      </select>
-    </div>
-    <div class="chart-container"><canvas id="curve"></canvas></div>
-    <div class="chart-info" id="curvaInfo"></div>
+<div class="chart-box">
+  <div class="chart-header">
+    <h3 class="chart-title">Carga por Analista</h3>
   </div>
-  
-  <div class="chart-box">
-    <div class="chart-header">
-      <div class="chart-title">Carga por Analista</div>
-      <div style="font-size:10px;color:var(--muted)">Clique nas barras para filtrar</div>
-    </div>
-    <div class="chart-container"><canvas id="analistas"></canvas></div>
-  </div>
-  
-  <div class="chart-box">
-    <div class="chart-header">
-      <div class="chart-title">Distribuição de Status</div>
-    </div>
-    <div class="chart-container"><canvas id="status"></canvas></div>
+  <div class="chart-container">
+    <canvas id="analistas"></canvas>
   </div>
 </div>
 
+<div class="chart-box">
+  <div class="chart-header">
+    <h3 class="chart-title">Distribuição de Status</h3>
+  </div>
+  <div class="chart-container">
+    <canvas id="status"></canvas>
+  </div>
+</div>
+
+<div class="chart-box">
+  <div class="chart-header">
+    <h3 class="chart-title">Acompanhamento Curva S</h3>
+    <select class="chart-select" id="projectSelect" onchange="updateCurvaS()">
+      <option value="all">Visão Geral</option>
+    </select>
+  </div>
+  <div class="chart-info" id="curvaInfo"></div>
+  <div class="chart-container">
+    <canvas id="curve"></canvas>
+  </div>
+</div>
+</div>
+
 <div class="table-box">
+<h2 class="table-title">Detalhamento de Projetos</h2>
 <table>
 <thead>
 <tr>
@@ -669,6 +950,18 @@ tr:hover{background:#f8fafc}
   </div>
 </div>
 
+<!-- BOTÕES FLUTUANTES -->
+<div class="floating-buttons">
+  <button class="float-btn scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" data-tooltip="Voltar ao Topo">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+  <button class="float-btn debug-btn" id="debugBtn" onclick="toggleDebug()" data-tooltip="Console de Debug">
+    <i class="fa-solid fa-bug"></i>
+  </button>
+</div>
+
+<div class="debug-panel" id="debugPanel"></div>
+
 <script>
 // ========== CONFIGURAÇÃO ==========
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSN6220bHIwZ9pzMZkhQ1hBT32sofXNn-FSvJYDNGFVKNCtEhpTqF3yg4zz-p25nALcm1J33QeLR_pn/pub?gid=378165818&single=true&output=csv';
@@ -676,6 +969,23 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSN6220bH
 let projectData = [];
 let charts = {};
 let currentFilters = { analista: null, status: null, projeto: null };
+
+// ========== SCROLL TO TOP ==========
+window.addEventListener('scroll', () => {
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  if (window.pageYOffset > 300) {
+    scrollTopBtn.classList.add('show');
+  } else {
+    scrollTopBtn.classList.remove('show');
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
 
 // ========== DEBUG ==========
 const debugLogs = [];
@@ -788,12 +1098,30 @@ function parseCSVLine(line) {
   return result;
 }
 
+function showError(message, details = '') {
+  const banner = document.getElementById('errorBanner');
+  const messageEl = document.getElementById('errorMessage');
+  const testUrlEl = document.getElementById('testUrl');
+  
+  messageEl.textContent = message + (details ? '\n\nDetalhes: ' + details : '');
+  testUrlEl.textContent = SHEET_CSV_URL;
+  banner.classList.add('show');
+  
+  debugLog(`Erro: ${message}`, 'error');
+  if (details) debugLog(`Detalhes: ${details}`, 'error');
+}
+
+function hideError() {
+  document.getElementById('errorBanner').classList.remove('show');
+}
+
 // ========== FETCH DATA ==========
 async function fetchData() {
   const loadingEl = document.getElementById('loading');
   const refreshIcon = document.getElementById('refresh-icon');
   
   loadingEl.style.display = 'block';
+  hideError();
   if (refreshIcon) refreshIcon.classList.add('spinning');
   
   debugLog('🔄 Iniciando carregamento...');
@@ -803,7 +1131,14 @@ async function fetchData() {
     const url = `${SHEET_CSV_URL}&cachebust=${Date.now()}`;
     debugLog('🌐 Fazendo fetch...');
     
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: 'GET',
+      cache: 'no-cache',
+      headers: {
+        'Accept': 'text/csv'
+      }
+    });
+    
     debugLog(`📡 Status: ${response.status}`, response.ok ? 'success' : 'error');
     
     if (!response.ok) {
@@ -813,10 +1148,14 @@ async function fetchData() {
     const csvData = await response.text();
     debugLog(`📝 Recebido: ${csvData.length} caracteres`);
     
+    if (csvData.length === 0) {
+      throw new Error("Planilha vazia ou não publicada");
+    }
+    
     const lines = csvData.split(/\r?\n/).filter(l => l.trim());
     debugLog(`📊 Linhas: ${lines.length}`, 'success');
     
-    if (lines.length < 2) throw new Error("Planilha vazia");
+    if (lines.length < 2) throw new Error("Planilha não contém dados");
     
     const headers = parseCSVLine(lines[0]);
     debugLog(`📋 Colunas: ${headers.join(', ')}`);
@@ -833,20 +1172,24 @@ async function fetchData() {
     };
     
     const colIdx = {
-      projeto: findCol(['projeto', 'nome']),
-      status: findCol(['status', 'situacao']),
-      analista: findCol(['analista', 'responsavel']),
-      obs: findCol(['obs', 'observacao']),
-      dataPrevista: findCol(['data prevista', 'previsao', 'prazo']),
-      concluidas: findCol(['concluidas']),
-      validacao: findCol(['em validacao', 'validacao']),
-      liberacao: findCol(['ag liberacao', 'liberacao']),
-      execucao: findCol(['em execucao', 'execucao']),
-      inicio: findCol(['ag inicio', 'inicio']),
-      descricao: findCol(['ag descricao', 'descricao'])
+      projeto: findCol(['projeto', 'nome', 'nomecontrato', 'contrato']),
+      status: findCol(['status', 'situacao', 'estado']),
+      analista: findCol(['analista', 'responsavel', 'resp']),
+      dataPrevista: findCol(['dataprevista', 'prazo', 'deadline', 'previsao']),
+      concluidas: findCol(['concluidas', 'concluido', 'feito']),
+      validacao: findCol(['validacao', 'valid']),
+      liberacao: findCol(['liberacao', 'lib']),
+      execucao: findCol(['execucao', 'exec']),
+      inicio: findCol(['inicio', 'start']),
+      descricao: findCol(['descricao', 'desc']),
+      obs: findCol(['obs', 'observacao', 'observacoes', 'nota', 'notas'])
     };
     
-    debugLog(`🔍 Projeto: col ${colIdx.projeto}, Status: col ${colIdx.status}`);
+    debugLog(`Mapeamento de colunas: ${JSON.stringify(colIdx)}`);
+    
+    if (colIdx.projeto < 0) {
+      throw new Error('Coluna "Projeto" não encontrada');
+    }
     
     projectData = [];
     
@@ -878,7 +1221,7 @@ async function fetchData() {
     
     debugLog(`✅ ${projectData.length} projetos carregados!`, 'success');
     
-    populateProjectSelect();
+    populateProjectSelects();
     renderAll();
     
     debugLog('🎉 Dashboard renderizado!', 'success');
@@ -886,36 +1229,68 @@ async function fetchData() {
   } catch (error) {
     debugLog(`❌ ERRO: ${error.message}`, 'error');
     
-    let msg = `Erro ao carregar dados:\n\n${error.message}\n\n`;
+    let errorMsg = 'Não foi possível carregar os dados da planilha.';
+    let details = error.message;
     
     if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-      msg += '🔒 SOLUÇÕES:\n\n';
-      msg += '1. Verifique se a planilha está publicada\n';
-      msg += '2. Vá em Arquivo > Compartilhar > Publicar na web\n';
-      msg += '3. Selecione a aba correta e formato CSV\n';
-      msg += '4. Clique em "Publicar"\n';
-      msg += '5. Use a URL gerada\n';
+      errorMsg = 'Erro de conexão ao tentar acessar a planilha.';
+      details = 'A planilha pode não estar publicada ou a URL está incorreta.';
+    } else if (error.message.includes('HTTP 404')) {
+      errorMsg = 'Planilha não encontrada (404).';
+      details = 'Verifique se a URL está correta e se a planilha ainda existe.';
+    } else if (error.message.includes('HTTP 403')) {
+      errorMsg = 'Acesso negado à planilha (403).';
+      details = 'A planilha não foi publicada ou as permissões estão incorretas.';
     }
     
-    alert(msg);
+    showError(errorMsg, details);
+    
   } finally {
     loadingEl.style.display = 'none';
     if (refreshIcon) refreshIcon.classList.remove('spinning');
   }
 }
 
-function populateProjectSelect() {
-  const select = document.getElementById('projectSelect');
-  select.innerHTML = '<option value="all">Visão Geral</option>';
+function populateProjectSelects() {
+  // Preencher select global
+  const globalSelect = document.getElementById('globalProjectSelect');
+  globalSelect.innerHTML = '<option value="all">📊 Todos os Projetos (Visão Geral)</option>';
+  
+  // Preencher select da Curva S
+  const curvaSelect = document.getElementById('projectSelect');
+  curvaSelect.innerHTML = '<option value="all">Visão Geral</option>';
+  
   projectData.forEach(p => {
-    const opt = document.createElement('option');
-    opt.value = p.Projeto;
-    opt.textContent = p.Projeto;
-    select.appendChild(opt);
+    // Global
+    const opt1 = document.createElement('option');
+    opt1.value = p.Projeto;
+    opt1.textContent = p.Projeto;
+    globalSelect.appendChild(opt1);
+    
+    // Curva S
+    const opt2 = document.createElement('option');
+    opt2.value = p.Projeto;
+    opt2.textContent = p.Projeto;
+    curvaSelect.appendChild(opt2);
   });
 }
 
 // ========== FILTROS ==========
+function filterByProject() {
+  const select = document.getElementById('globalProjectSelect');
+  const projeto = select.value;
+  
+  if (projeto === 'all') {
+    currentFilters.projeto = null;
+  } else {
+    currentFilters.projeto = projeto;
+    // Sincronizar com o select da Curva S
+    document.getElementById('projectSelect').value = projeto;
+  }
+  
+  updateFilters();
+}
+
 function filterByAnalista(analista) {
   currentFilters.analista = currentFilters.analista === analista ? null : analista;
   updateFilters();
@@ -932,8 +1307,10 @@ function filterByStatus(status) {
 
 function clearAllFilters() {
   currentFilters = { analista: null, status: null, projeto: null };
+  document.getElementById('globalProjectSelect').value = 'all';
   document.getElementById('projectSelect').value = 'all';
   updateFilters();
+  scrollToTop();
 }
 
 function updateFilters() {
@@ -951,13 +1328,14 @@ function updateFilterDisplay() {
   const filterTagsEl = document.getElementById('filterTags');
   const btnClear = document.getElementById('btnClearFilters');
   
-  const hasFilters = currentFilters.analista || currentFilters.status;
+  const hasFilters = currentFilters.analista || currentFilters.status || currentFilters.projeto;
   
   if (hasFilters) {
     activeFiltersEl.style.display = 'flex';
     btnClear.style.display = 'flex';
     
     let tags = '';
+    if (currentFilters.projeto) tags += `<span class="filter-tag">Projeto: ${currentFilters.projeto}</span>`;
     if (currentFilters.analista) tags += `<span class="filter-tag">Analista: ${currentFilters.analista}</span>`;
     if (currentFilters.status) {
       const labels = { andamento: 'Em Andamento', paralisado: 'Paralisado', cliente: 'Ag. Cliente' };
@@ -979,6 +1357,7 @@ function updateFilterDisplay() {
 
 function getFilteredData() {
   let filtered = [...projectData];
+  if (currentFilters.projeto) filtered = filtered.filter(p => p.Projeto === currentFilters.projeto);
   if (currentFilters.analista) filtered = filtered.filter(p => p.Analista === currentFilters.analista);
   if (currentFilters.status) filtered = filtered.filter(p => cleanKey(p.Status).includes(currentFilters.status));
   return filtered;
@@ -988,7 +1367,7 @@ function getFilteredData() {
 function renderAll() {
   const filtered = getFilteredData();
   renderTable(filtered);
-  renderKPIs(projectData);
+  renderKPIs(filtered);
   renderCharts(filtered);
 }
 
@@ -1092,6 +1471,13 @@ function updateCurvaS() {
   const select = document.getElementById('projectSelect');
   const selectedProject = select.value;
   const curvaInfoEl = document.getElementById('curvaInfo');
+  
+  // Sincronizar com filtro global se necessário
+  const globalSelect = document.getElementById('globalProjectSelect');
+  if (currentFilters.projeto && selectedProject !== currentFilters.projeto) {
+    select.value = currentFilters.projeto;
+    return updateCurvaS();
+  }
   
   let data, label, cor, diferenca;
   
