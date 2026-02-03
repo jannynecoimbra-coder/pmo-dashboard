@@ -7,12 +7,11 @@
 
 <!-- Fontes e libs -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 :root{
-  /* ========== CORES PRINCIPAIS - PERSONALIZE AQUI ========== */
   --bg:#f1f5f9;
   --panel:#ffffff;
   --blue:#0ea5e9;
@@ -25,7 +24,6 @@
   --border:#e5e7eb;
   --shadow:0 10px 30px rgba(0,0,0,.05);
   
-  /* ========== CORES DOS ANALISTAS - PERSONALIZE AQUI ========== */
   --color-abraao: #FFB800;
   --color-dalto: #f97316;
   --color-jonathas: #38bdf8;
@@ -35,7 +33,6 @@
   --color-ernane: #1e3a8a;
   --color-william: #16a34a;
   
-  /* ========== CORES DOS STATUS - PERSONALIZE AQUI ========== */
   --status-andamento-bg: #dcfce7;
   --status-andamento-text: #166534;
   --status-paralisado-bg: #fee2e2;
@@ -121,10 +118,6 @@ header span{
   transform: translateY(-2px);
 }
 
-.btn-refresh i, .btn-clear-filters i {
-  font-size: 14px;
-}
-
 .spinning {
   animation: spin 1s linear infinite;
 }
@@ -134,7 +127,6 @@ header span{
   to { transform: rotate(360deg); }
 }
 
-/* Filtros Ativos */
 .active-filters {
   background: var(--panel);
   padding: 16px 20px;
@@ -167,7 +159,6 @@ header span{
   gap: 8px;
 }
 
-/* KPIs */
 .kpis{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -228,7 +219,6 @@ header span{
   opacity: 1;
 }
 
-/* Charts */
 .charts{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
@@ -259,12 +249,6 @@ header span{
   color: var(--text);
 }
 
-.chart-controls {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
 .chart-select {
   padding: 6px 12px;
   border: 1px solid var(--border);
@@ -279,12 +263,6 @@ header span{
 
 .chart-select:hover {
   border-color: var(--blue);
-}
-
-.chart-select:focus {
-  outline: none;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
 }
 
 .chart-info {
@@ -320,7 +298,6 @@ header span{
   width: 100%;
 }
 
-/* Table */
 .table-box{
   background:var(--panel);
   border-radius:18px;
@@ -365,7 +342,6 @@ td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(6) {
 
 tr:hover{background:#f8fafc}
 
-/* Status Badges */
 .badge{
   padding:6px 12px;
   border-radius:20px;
@@ -401,7 +377,6 @@ tr:hover{background:#f8fafc}
   color:var(--status-concluido-text);
 }
 
-/* Estilos de Analistas */
 .analista-bold { font-weight: 800; }
 .color-abraao { color: var(--color-abraao) !important; }
 .color-dalto { color: var(--color-dalto) !important; } 
@@ -413,7 +388,6 @@ tr:hover{background:#f8fafc}
 .color-william { color: var(--color-william) !important; }     
 .color-default { color: var(--text) !important; }
 
-/* Progress */
 .progress{
   display:flex;
   align-items:center;
@@ -434,7 +408,6 @@ tr:hover{background:#f8fafc}
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Modal */
 #modal{
   position:fixed;
   inset:0;
@@ -505,6 +478,60 @@ tr:hover{background:#f8fafc}
   box-shadow: var(--shadow);
 }
 
+#debugPanel {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.9);
+  color: #00ff00;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  max-width: 400px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+#debugPanel .debug-line {
+  margin: 2px 0;
+  line-height: 1.4;
+}
+
+#debugPanel .debug-error {
+  color: #ff4444;
+}
+
+#debugPanel .debug-success {
+  color: #00ff00;
+}
+
+#debugPanel .debug-warning {
+  color: #ffaa00;
+}
+
+#debugToggle {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  z-index: 1100;
+  font-family: monospace;
+}
+
+#debugToggle:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
 .no-results {
   text-align: center;
   padding: 60px 20px;
@@ -523,7 +550,6 @@ tr:hover{background:#f8fafc}
   color: var(--text);
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   body { padding: 15px; }
   header { flex-direction: column; align-items: flex-start; }
@@ -536,6 +562,8 @@ tr:hover{background:#f8fafc}
 
 <body>
 <div id="loading">🔄 Sincronizando dados...</div>
+<button id="debugToggle" onclick="toggleDebug()">🐛 DEBUG</button>
+<div id="debugPanel"></div>
 
 <div class="container">
 
@@ -642,16 +670,45 @@ tr:hover{background:#f8fafc}
 </div>
 
 <script>
-// ========== CONFIGURAÇÃO DA PLANILHA ==========
+// ========== CONFIGURAÇÃO ==========
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSN6220bHIwZ9pzMZkhQ1hBT32sofXNn-FSvJYDNGFVKNCtEhpTqF3yg4zz-p25nALcm1J33QeLR_pn/pub?gid=378165818&single=true&output=csv';
 
 let projectData = [];
 let charts = {};
-let currentFilters = {
-  analista: null,
-  status: null,
-  projeto: null
-};
+let currentFilters = { analista: null, status: null, projeto: null };
+
+// ========== DEBUG ==========
+const debugLogs = [];
+const MAX_DEBUG_LOGS = 50;
+
+function debugLog(message, type = 'info') {
+  const timestamp = new Date().toLocaleTimeString('pt-BR');
+  debugLogs.push({ timestamp, message, type });
+  if (debugLogs.length > MAX_DEBUG_LOGS) debugLogs.shift();
+  
+  const emoji = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+  console.log(`${emoji} [${timestamp}] ${message}`);
+  updateDebugPanel();
+}
+
+function toggleDebug() {
+  const panel = document.getElementById('debugPanel');
+  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+  if (panel.style.display === 'block') updateDebugPanel();
+}
+
+function updateDebugPanel() {
+  const panel = document.getElementById('debugPanel');
+  if (panel.style.display === 'block') {
+    panel.innerHTML = debugLogs.map(log => {
+      const className = log.type === 'error' ? 'debug-error' : 
+                        log.type === 'success' ? 'debug-success' : 
+                        log.type === 'warning' ? 'debug-warning' : '';
+      return `<div class="debug-line ${className}">[${log.timestamp}] ${log.message}</div>`;
+    }).reverse().join('');
+    panel.scrollTop = 0;
+  }
+}
 
 // ========== FUNÇÕES AUXILIARES ==========
 function cleanKey(str) {
@@ -662,7 +719,6 @@ function cleanKey(str) {
 function getAnalistaClass(nome) {
   if (!nome) return 'color-default';
   const n = cleanKey(nome);
-  
   if (n.includes('abraao')) return 'color-abraao';
   if (n.includes('dalto')) return 'color-dalto';
   if (n.includes('jonathas')) return 'color-jonathas';
@@ -671,14 +727,12 @@ function getAnalistaClass(nome) {
   if (n.includes('cristhian')) return 'color-cristhian';
   if (n.includes('ernane')) return 'color-ernane';
   if (n.includes('william')) return 'color-william';
-  
   return 'color-default';
 }
 
 function getAnalistaColor(nome) {
   if (!nome) return '#94a3b8';
   const n = cleanKey(nome);
-  
   if (n.includes('abraao')) return '#FFB800';
   if (n.includes('dalto')) return '#f97316';
   if (n.includes('jonathas')) return '#38bdf8';
@@ -687,19 +741,16 @@ function getAnalistaColor(nome) {
   if (n.includes('cristhian')) return '#475569';
   if (n.includes('ernane')) return '#1e3a8a';
   if (n.includes('william')) return '#16a34a';
-  
   return '#94a3b8';
 }
 
 function getStatusColor(status) {
   const s = cleanKey(status);
-  
   if (s.includes('andamento')) return '#10b981';
   if (s.includes('paralisado')) return '#ef4444';
   if (s.includes('cliente')) return '#8b5cf6';
   if (s.includes('planejado')) return '#94a3b8';
   if (s.includes('concluido')) return '#0ea5e9';
-  
   return '#f59e0b';
 }
 
@@ -709,7 +760,6 @@ function getSemaforoColor(diferenca) {
   return 'vermelho';
 }
 
-// ========== PARSER CSV ROBUSTO ==========
 function parseCSVLine(line) {
   const result = [];
   let current = '';
@@ -738,7 +788,7 @@ function parseCSVLine(line) {
   return result;
 }
 
-// ========== BUSCAR DADOS DA PLANILHA ==========
+// ========== FETCH DATA ==========
 async function fetchData() {
   const loadingEl = document.getElementById('loading');
   const refreshIcon = document.getElementById('refresh-icon');
@@ -746,160 +796,142 @@ async function fetchData() {
   loadingEl.style.display = 'block';
   if (refreshIcon) refreshIcon.classList.add('spinning');
   
+  debugLog('🔄 Iniciando carregamento...');
+  debugLog(`📊 URL: ${SHEET_CSV_URL.substring(0, 80)}...`);
+  
   try {
-    const url = `${SHEET_CSV_URL}&t=${Date.now()}`;
+    const url = `${SHEET_CSV_URL}&cachebust=${Date.now()}`;
+    debugLog('🌐 Fazendo fetch...');
     
-    const response = await fetch(url, {
-      cache: 'no-cache',
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
-      }
-    });
+    const response = await fetch(url);
+    debugLog(`📡 Status: ${response.status}`, response.ok ? 'success' : 'error');
     
     if (!response.ok) {
-      throw new Error(`Erro HTTP: ${response.status}`);
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
     
     const csvData = await response.text();
-    const lines = csvData.split(/\r?\n/).filter(l => l.trim() !== "");
+    debugLog(`📝 Recebido: ${csvData.length} caracteres`);
     
-    if (lines.length < 2) {
-      throw new Error("Planilha vazia ou sem dados");
-    }
+    const lines = csvData.split(/\r?\n/).filter(l => l.trim());
+    debugLog(`📊 Linhas: ${lines.length}`, 'success');
     
-    // Processar cabeçalho
+    if (lines.length < 2) throw new Error("Planilha vazia");
+    
     const headers = parseCSVLine(lines[0]);
-    const colMap = {};
-    headers.forEach((header, idx) => {
-      colMap[cleanKey(header)] = idx;
-    });
+    debugLog(`📋 Colunas: ${headers.join(', ')}`);
     
-    // Mapear colunas
+    const colMap = {};
+    headers.forEach((h, i) => colMap[cleanKey(h)] = i);
+    
     const findCol = (names) => {
-      for (let name of names) {
-        const idx = colMap[cleanKey(name)];
+      for (let n of names) {
+        const idx = colMap[cleanKey(n)];
         if (idx !== undefined) return idx;
       }
       return -1;
     };
     
     const colIdx = {
-      projeto: findCol(['projeto', 'nome', 'name']),
+      projeto: findCol(['projeto', 'nome']),
       status: findCol(['status', 'situacao']),
       analista: findCol(['analista', 'responsavel']),
-      obs: findCol(['obs', 'observacao', 'observacoes']),
+      obs: findCol(['obs', 'observacao']),
       dataPrevista: findCol(['data prevista', 'previsao', 'prazo']),
-      concluidas: findCol(['concluidas', 'concluida']),
+      concluidas: findCol(['concluidas']),
       validacao: findCol(['em validacao', 'validacao']),
-      liberacao: findCol(['ag liberacao', 'liberacao', 'ag. liberacao']),
+      liberacao: findCol(['ag liberacao', 'liberacao']),
       execucao: findCol(['em execucao', 'execucao']),
-      inicio: findCol(['ag inicio', 'inicio', 'ag. inicio']),
-      descricao: findCol(['ag descricao', 'descricao', 'ag. descricao'])
+      inicio: findCol(['ag inicio', 'inicio']),
+      descricao: findCol(['ag descricao', 'descricao'])
     };
     
-    // Processar dados
+    debugLog(`🔍 Projeto: col ${colIdx.projeto}, Status: col ${colIdx.status}`);
+    
     projectData = [];
     
     for (let i = 1; i < lines.length; i++) {
       const values = parseCSVLine(lines[i]);
+      if (colIdx.projeto < 0 || !values[colIdx.projeto]?.trim()) continue;
       
-      if (colIdx.projeto < 0 || !values[colIdx.projeto] || values[colIdx.projeto].trim() === "") {
-        continue;
-      }
-      
-      const getValue = (idx, defaultVal = "") => {
-        return idx >= 0 && values[idx] ? values[idx].trim() : defaultVal;
-      };
-      
-      const getNumber = (idx) => {
+      const getValue = (idx, def = "") => (idx >= 0 && values[idx]) ? values[idx].trim() : def;
+      const getNum = (idx) => {
         if (idx < 0) return 0;
-        const val = values[idx] ? values[idx].trim() : "0";
-        const num = parseInt(val.replace(/\D/g, '')) || 0;
-        return num;
+        const val = values[idx]?.trim() || "0";
+        return parseInt(val.replace(/\D/g, '')) || 0;
       };
       
-      const projeto = getValue(colIdx.projeto);
-      const status = getValue(colIdx.status, "Planejado");
-      const analista = getValue(colIdx.analista, "N/A");
-      const obs = getValue(colIdx.obs, "Sem observações.");
-      const dataPrevista = getValue(colIdx.dataPrevista, "-");
-      
-      const concluidas = getNumber(colIdx.concluidas);
-      const validacao = getNumber(colIdx.validacao);
-      const liberacao = getNumber(colIdx.liberacao);
-      const execucao = getNumber(colIdx.execucao);
-      const inicio = getNumber(colIdx.inicio);
-      const descricao = getNumber(colIdx.descricao);
-      
-      const total = concluidas + validacao + liberacao + execucao + inicio + descricao;
+      const concluidas = getNum(colIdx.concluidas);
+      const total = concluidas + getNum(colIdx.validacao) + getNum(colIdx.liberacao) + 
+                    getNum(colIdx.execucao) + getNum(colIdx.inicio) + getNum(colIdx.descricao);
       
       projectData.push({
-        Projeto: projeto,
-        Status: status,
-        Analista: analista,
-        DataPrevista: dataPrevista,
+        Projeto: getValue(colIdx.projeto),
+        Status: getValue(colIdx.status, "Planejado"),
+        Analista: getValue(colIdx.analista, "N/A"),
+        DataPrevista: getValue(colIdx.dataPrevista, "-"),
         Concluidas: concluidas,
         Total: total,
-        Obs: obs
+        Obs: getValue(colIdx.obs, "Sem observações.")
       });
     }
     
-    // Popular select de projetos
-    populateProjectSelect();
+    debugLog(`✅ ${projectData.length} projetos carregados!`, 'success');
     
-    // Renderizar tudo
+    populateProjectSelect();
     renderAll();
     
+    debugLog('🎉 Dashboard renderizado!', 'success');
+    
   } catch (error) {
-    console.error("Erro ao carregar dados:", error);
-    alert(`Erro ao carregar dados da planilha:\n${error.message}\n\nVerifique se a planilha está publicada corretamente.`);
+    debugLog(`❌ ERRO: ${error.message}`, 'error');
+    
+    let msg = `Erro ao carregar dados:\n\n${error.message}\n\n`;
+    
+    if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+      msg += '🔒 SOLUÇÕES:\n\n';
+      msg += '1. Verifique se a planilha está publicada\n';
+      msg += '2. Vá em Arquivo > Compartilhar > Publicar na web\n';
+      msg += '3. Selecione a aba correta e formato CSV\n';
+      msg += '4. Clique em "Publicar"\n';
+      msg += '5. Use a URL gerada\n';
+    }
+    
+    alert(msg);
   } finally {
     loadingEl.style.display = 'none';
     if (refreshIcon) refreshIcon.classList.remove('spinning');
   }
 }
 
-// ========== POPULAR SELECT DE PROJETOS ==========
 function populateProjectSelect() {
   const select = document.getElementById('projectSelect');
   select.innerHTML = '<option value="all">Visão Geral</option>';
-  
   projectData.forEach(p => {
-    const option = document.createElement('option');
-    option.value = p.Projeto;
-    option.textContent = p.Projeto;
-    select.appendChild(option);
+    const opt = document.createElement('option');
+    opt.value = p.Projeto;
+    opt.textContent = p.Projeto;
+    select.appendChild(opt);
   });
 }
 
 // ========== FILTROS ==========
 function filterByAnalista(analista) {
-  if (currentFilters.analista === analista) {
-    currentFilters.analista = null;
-  } else {
-    currentFilters.analista = analista;
-  }
+  currentFilters.analista = currentFilters.analista === analista ? null : analista;
   updateFilters();
 }
 
 function filterByStatus(status) {
   if (status === 'all') {
     currentFilters.status = null;
-  } else if (currentFilters.status === status) {
-    currentFilters.status = null;
   } else {
-    currentFilters.status = status;
+    currentFilters.status = currentFilters.status === status ? null : status;
   }
   updateFilters();
 }
 
 function clearAllFilters() {
-  currentFilters = {
-    analista: null,
-    status: null,
-    projeto: null
-  };
+  currentFilters = { analista: null, status: null, projeto: null };
   document.getElementById('projectSelect').value = 'all';
   updateFilters();
 }
@@ -907,14 +939,9 @@ function clearAllFilters() {
 function updateFilters() {
   renderAll();
   updateFilterDisplay();
-  
-  // Scroll suave até a tabela se houver filtro ativo
   if (currentFilters.analista || currentFilters.status) {
     setTimeout(() => {
-      document.querySelector('.table-box').scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
+      document.querySelector('.table-box')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 300);
   }
 }
@@ -922,100 +949,64 @@ function updateFilters() {
 function updateFilterDisplay() {
   const activeFiltersEl = document.getElementById('activeFilters');
   const filterTagsEl = document.getElementById('filterTags');
-  const btnClearFilters = document.getElementById('btnClearFilters');
+  const btnClear = document.getElementById('btnClearFilters');
   
   const hasFilters = currentFilters.analista || currentFilters.status;
   
   if (hasFilters) {
     activeFiltersEl.style.display = 'flex';
-    btnClearFilters.style.display = 'flex';
+    btnClear.style.display = 'flex';
     
     let tags = '';
-    
-    if (currentFilters.analista) {
-      tags += `<span class="filter-tag">Analista: ${currentFilters.analista}</span>`;
-    }
-    
+    if (currentFilters.analista) tags += `<span class="filter-tag">Analista: ${currentFilters.analista}</span>`;
     if (currentFilters.status) {
-      const statusLabel = {
-        'andamento': 'Em Andamento',
-        'paralisado': 'Paralisado',
-        'cliente': 'Ag. Cliente'
-      };
-      tags += `<span class="filter-tag">Status: ${statusLabel[currentFilters.status] || currentFilters.status}</span>`;
+      const labels = { andamento: 'Em Andamento', paralisado: 'Paralisado', cliente: 'Ag. Cliente' };
+      tags += `<span class="filter-tag">Status: ${labels[currentFilters.status] || currentFilters.status}</span>`;
     }
-    
     filterTagsEl.innerHTML = tags;
   } else {
     activeFiltersEl.style.display = 'none';
-    btnClearFilters.style.display = 'none';
+    btnClear.style.display = 'none';
   }
   
-  // Atualizar KPIs ativos
   document.querySelectorAll('.kpi').forEach(kpi => kpi.classList.remove('active'));
-  if (currentFilters.status === 'andamento') {
-    document.querySelectorAll('.kpi')[1].classList.add('active');
-  } else if (currentFilters.status === 'paralisado') {
-    document.querySelectorAll('.kpi')[2].classList.add('active');
-  } else if (currentFilters.status === 'cliente') {
-    document.querySelectorAll('.kpi')[3].classList.add('active');
-  } else if (!currentFilters.status) {
-    document.querySelectorAll('.kpi')[0].classList.add('active');
-  }
+  const kpis = document.querySelectorAll('.kpi');
+  if (currentFilters.status === 'andamento') kpis[1]?.classList.add('active');
+  else if (currentFilters.status === 'paralisado') kpis[2]?.classList.add('active');
+  else if (currentFilters.status === 'cliente') kpis[3]?.classList.add('active');
+  else if (!currentFilters.status) kpis[0]?.classList.add('active');
 }
 
 function getFilteredData() {
   let filtered = [...projectData];
-  
-  if (currentFilters.analista) {
-    filtered = filtered.filter(p => p.Analista === currentFilters.analista);
-  }
-  
-  if (currentFilters.status) {
-    filtered = filtered.filter(p => {
-      const s = cleanKey(p.Status);
-      return s.includes(currentFilters.status);
-    });
-  }
-  
+  if (currentFilters.analista) filtered = filtered.filter(p => p.Analista === currentFilters.analista);
+  if (currentFilters.status) filtered = filtered.filter(p => cleanKey(p.Status).includes(currentFilters.status));
   return filtered;
 }
 
-// ========== RENDERIZAR TUDO ==========
+// ========== RENDER ==========
 function renderAll() {
   const filtered = getFilteredData();
   renderTable(filtered);
-  renderKPIs(projectData); // KPIs sempre mostram dados completos
+  renderKPIs(projectData);
   renderCharts(filtered);
 }
 
-// ========== RENDERIZAR TABELA ==========
-function renderTable(p){
+function renderTable(p) {
   const tb = document.getElementById("tbody");
-  
   if (p.length === 0) {
-    tb.innerHTML = `
-      <tr>
-        <td colspan="6">
-          <div class="no-results">
-            <i class="fa-solid fa-inbox"></i>
-            <h3>Nenhum projeto encontrado</h3>
-            <p style="margin-top:8px;font-size:13px">Tente ajustar os filtros ou limpar a busca</p>
-          </div>
-        </td>
-      </tr>`;
+    tb.innerHTML = `<tr><td colspan="6"><div class="no-results"><i class="fa-solid fa-inbox"></i><h3>Nenhum projeto encontrado</h3><p style="margin-top:8px;font-size:13px">Ajuste os filtros</p></div></td></tr>`;
     return;
   }
   
-  tb.innerHTML = p.map(x=>{
-    const perc = x.Total > 0 ? Math.round((x.Concluidas/x.Total)*100) : 0;
-    const statusClass = cleanKey(x.Status).replace(/\./g, "").replace(/\s/g,'-');
-    const analistaColorClass = getAnalistaClass(x.Analista);
+  tb.innerHTML = p.map(x => {
+    const perc = x.Total > 0 ? Math.round((x.Concluidas / x.Total) * 100) : 0;
+    const statusClass = cleanKey(x.Status).replace(/\./g, "").replace(/\s/g, '-');
+    const analistaClass = getAnalistaClass(x.Analista);
     
-    return `
-    <tr>
+    return `<tr>
       <td><strong>${x.Projeto}</strong></td>
-      <td class="analista-bold ${analistaColorClass}">${x.Analista}</td>
+      <td class="analista-bold ${analistaClass}">${x.Analista}</td>
       <td><span class="badge ${statusClass}">${x.Status}</span></td>
       <td>${x.DataPrevista}</td>
       <td><div class="progress"><div class="bar"><div class="fill" style="width:${perc}%"></div></div><strong style="width:35px;text-align:right">${perc}%</strong></div></td>
@@ -1024,120 +1015,79 @@ function renderTable(p){
   }).join("");
 }
 
-// ========== RENDERIZAR KPIs ==========
-function renderKPIs(p){
+function renderKPIs(p) {
   document.getElementById("kTotal").innerText = p.length;
   document.getElementById("kAtivos").innerText = p.filter(x => cleanKey(x.Status).includes("andamento")).length;
   document.getElementById("kPausados").innerText = p.filter(x => cleanKey(x.Status).includes("paralisado")).length;
   document.getElementById("kCliente").innerText = p.filter(x => cleanKey(x.Status).includes("cliente")).length;
 }
 
-// ========== RENDERIZAR GRÁFICOS ==========
-function renderCharts(p){
+function renderCharts(p) {
   if (p.length === 0) {
-    // Destruir gráficos se não houver dados
     Object.values(charts).forEach(c => c.destroy());
     charts = {};
     return;
   }
   
-  // Contagens
   const analistasCount = {};
   const statusCount = {};
-  
-  p.forEach(x=>{
+  p.forEach(x => {
     analistasCount[x.Analista] = (analistasCount[x.Analista] || 0) + 1;
     statusCount[x.Status] = (statusCount[x.Status] || 0) + 1;
   });
-
-  // Destruir gráficos antigos
+  
   Object.values(charts).forEach(c => c.destroy());
-
-  // Gráfico de Analistas - COM CORES E INTERATIVIDADE
+  
   const analistaLabels = Object.keys(analistasCount);
-  const analistaColors = analistaLabels.map(nome => getAnalistaColor(nome));
+  const analistaColors = analistaLabels.map(n => getAnalistaColor(n));
   
   charts.analistas = new Chart(document.getElementById('analistas'), {
     type: 'bar',
     data: {
       labels: analistaLabels,
-      datasets: [{ 
-        data: Object.values(analistasCount), 
-        backgroundColor: analistaColors,
-        borderRadius: 6, 
-        barThickness: 20 
-      }]
+      datasets: [{ data: Object.values(analistasCount), backgroundColor: analistaColors, borderRadius: 6, barThickness: 20 }]
     },
-    options: { 
-      indexAxis: 'y', 
-      responsive: true, 
+    options: {
+      indexAxis: 'y',
+      responsive: true,
       maintainAspectRatio: false,
-      onClick: (event, elements) => {
+      onClick: (e, elements) => {
         if (elements.length > 0) {
-          const index = elements[0].index;
-          const analista = analistaLabels[index];
+          const analista = analistaLabels[elements[0].index];
           filterByAnalista(analista);
         }
       },
-      plugins: { 
+      plugins: {
         legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: (context) => `${context.parsed.x} projeto(s)`
-          }
-        }
+        tooltip: { callbacks: { label: (ctx) => `${ctx.parsed.x} projeto(s)` } }
       },
-      scales: {
-        x: {
-          beginAtZero: true,
-          ticks: { stepSize: 1 }
-        }
-      }
+      scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
     }
   });
-
-  // Gráfico de Status - COM CORES PERSONALIZADAS
+  
   const statusLabels = Object.keys(statusCount);
-  const statusColors = statusLabels.map(status => getStatusColor(status));
+  const statusColors = statusLabels.map(s => getStatusColor(s));
   
   charts.status = new Chart(document.getElementById('status'), {
     type: 'doughnut',
     data: {
       labels: statusLabels,
-      datasets: [{ 
-        data: Object.values(statusCount), 
-        backgroundColor: statusColors,
-        borderWidth: 0,
-        hoverOffset: 10
-      }]
+      datasets: [{ data: Object.values(statusCount), backgroundColor: statusColors, borderWidth: 0, hoverOffset: 10 }]
     },
-    options: { 
-      responsive: true, 
-      maintainAspectRatio: false, 
-      cutout: '70%', 
-      plugins: { 
-        legend: { 
-          position: 'bottom',
-          labels: {
-            padding: 15,
-            usePointStyle: true,
-            font: { size: 11, weight: '600' }
-          }
-        },
-        tooltip: {
-          callbacks: {
-            label: (context) => `${context.label}: ${context.parsed} projeto(s)`
-          }
-        }
-      } 
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '70%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 15, usePointStyle: true, font: { size: 11, weight: '600' } } },
+        tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.parsed} projeto(s)` } }
+      }
     }
   });
-
-  // Curva S - atualizar
+  
   updateCurvaS();
 }
 
-// ========== ATUALIZAR CURVA S ==========
 function updateCurvaS() {
   const select = document.getElementById('projectSelect');
   const selectedProject = select.value;
@@ -1146,135 +1096,78 @@ function updateCurvaS() {
   let data, label, cor, diferenca;
   
   if (selectedProject === 'all') {
-    // Visão geral
     const filtered = getFilteredData();
-    const mediaGeral = filtered.length > 0 
-      ? Math.round(filtered.reduce((acc, curr) => acc + (curr.Total > 0 ? (curr.Concluidas/curr.Total)*100 : 0), 0) / filtered.length) 
+    const media = filtered.length > 0 
+      ? Math.round(filtered.reduce((acc, curr) => acc + (curr.Total > 0 ? (curr.Concluidas / curr.Total) * 100 : 0), 0) / filtered.length)
       : 0;
     
-    diferenca = 100 - mediaGeral;
+    diferenca = 100 - media;
     const semaforo = getSemaforoColor(diferenca);
     cor = semaforo === 'verde' ? '#10b981' : semaforo === 'amarelo' ? '#f59e0b' : '#ef4444';
     
-    data = [0, mediaGeral];
+    data = [0, media];
     label = 'Realizado (Média Geral)';
     
-    curvaInfoEl.innerHTML = `
-      <span class="semaforo-indicator semaforo-${semaforo}"></span>
-      <strong>Diferença: ${diferenca.toFixed(1)}%</strong> entre planejado e realizado
-    `;
+    curvaInfoEl.innerHTML = `<span class="semaforo-indicator semaforo-${semaforo}"></span><strong>Diferença: ${diferenca.toFixed(1)}%</strong> entre planejado e realizado`;
     curvaInfoEl.classList.add('show');
-    
   } else {
-    // Projeto específico
     const projeto = projectData.find(p => p.Projeto === selectedProject);
-    
     if (projeto) {
-      const percRealizado = projeto.Total > 0 ? Math.round((projeto.Concluidas/projeto.Total)*100) : 0;
-      diferenca = 100 - percRealizado;
+      const perc = projeto.Total > 0 ? Math.round((projeto.Concluidas / projeto.Total) * 100) : 0;
+      diferenca = 100 - perc;
       const semaforo = getSemaforoColor(diferenca);
       cor = semaforo === 'verde' ? '#10b981' : semaforo === 'amarelo' ? '#f59e0b' : '#ef4444';
       
-      data = [0, percRealizado];
+      data = [0, perc];
       label = `Realizado (${projeto.Projeto})`;
       
-      curvaInfoEl.innerHTML = `
-        <span class="semaforo-indicator semaforo-${semaforo}"></span>
-        <strong>Diferença: ${diferenca.toFixed(1)}%</strong> entre planejado e realizado | 
-        <strong>${projeto.Concluidas}/${projeto.Total}</strong> atividades concluídas
-      `;
+      curvaInfoEl.innerHTML = `<span class="semaforo-indicator semaforo-${semaforo}"></span><strong>Diferença: ${diferenca.toFixed(1)}%</strong> entre planejado e realizado | <strong>${projeto.Concluidas}/${projeto.Total}</strong> atividades`;
       curvaInfoEl.classList.add('show');
     }
   }
   
-  // Atualizar gráfico
-  if (charts.curve) {
-    charts.curve.destroy();
-  }
+  if (charts.curve) charts.curve.destroy();
   
   charts.curve = new Chart(document.getElementById('curve'), {
     type: 'line',
     data: {
       labels: ['Início', 'Progresso Atual'],
       datasets: [
-        { 
-          label: 'Meta Planejada', 
-          data: [0, 100], 
-          borderColor: '#94a3b8', 
-          borderDash: [5, 5], 
-          borderWidth: 2, 
-          fill: false, 
-          tension: 0.4,
-          pointRadius: 4
-        },
-        { 
-          label: label, 
-          data: data, 
-          borderColor: cor, 
-          backgroundColor: cor + '20', 
-          fill: true, 
-          tension: 0.4,
-          pointRadius: 5,
-          pointHoverRadius: 7
-        }
+        { label: 'Meta Planejada', data: [0, 100], borderColor: '#94a3b8', borderDash: [5, 5], borderWidth: 2, fill: false, tension: 0.4, pointRadius: 4 },
+        { label: label, data: data, borderColor: cor, backgroundColor: cor + '20', fill: true, tension: 0.4, pointRadius: 5, pointHoverRadius: 7 }
       ]
     },
-    options: { 
-      responsive: true, 
+    options: {
+      responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {
-            padding: 15,
-            usePointStyle: true,
-            font: { size: 11, weight: '600' }
-          }
-        },
-        tooltip: {
-          callbacks: {
-            label: (context) => `${context.dataset.label}: ${context.parsed.y}%`
-          }
-        }
+        legend: { position: 'bottom', labels: { padding: 15, usePointStyle: true, font: { size: 11, weight: '600' } } },
+        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}%` } }
       },
-      scales: { 
-        y: { 
-          beginAtZero: true, 
-          max: 100,
-          ticks: {
-            callback: (value) => value + '%'
-          }
-        } 
-      } 
+      scales: { y: { beginAtZero: true, max: 100, ticks: { callback: (v) => v + '%' } } }
     }
   });
 }
 
 // ========== MODAL ==========
-function openModal(title, obs){
+function openModal(title, obs) {
   document.getElementById("mTitle").textContent = title;
   document.getElementById("mObs").textContent = obs;
   document.getElementById("modal").style.display = "flex";
 }
 
-function closeModal(){ 
-  document.getElementById("modal").style.display = "none"; 
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
 }
 
-window.onclick = e => { 
-  if(e.target == document.getElementById("modal")) closeModal(); 
+window.onclick = e => {
+  if (e.target == document.getElementById("modal")) closeModal();
 }
 
-// ========== INICIALIZAÇÃO ==========
+// ========== INIT ==========
 window.onload = fetchData;
-
-// Auto-atualização a cada 5 minutos
 setInterval(fetchData, 300000);
-
-// Limpar filtros ao sair da página
-window.addEventListener('beforeunload', () => {
-  clearAllFilters();
-});
+window.addEventListener('beforeunload', clearAllFilters);
 </script>
 </body>
 </html>
