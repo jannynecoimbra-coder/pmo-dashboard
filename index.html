@@ -1424,19 +1424,34 @@ function renderCharts(p) {
     return;
   }
   
+  // Renderizar Status Chart
+  renderStatusChart(p);
+  
+  // Renderizar outros gráficos
+  updateAnalistaChart();
+  updateCurvaS();
+}
+
+function renderStatusChart(p) {
   const statusCount = {};
   p.forEach(x => {
     statusCount[x.Status] = (statusCount[x.Status] || 0) + 1;
   });
   
-  // Destruir apenas o gráfico de status antes de recriá-lo
+  // Destruir o gráfico de status antes de recriá-lo
   destroyChart('status');
   
   // Status Chart
   const statusLabels = Object.keys(statusCount);
   const statusColors = statusLabels.map(s => getStatusColor(s));
   
-  charts.status = new Chart(document.getElementById('status'), {
+  const statusCanvas = document.getElementById('status');
+  if (!statusCanvas) {
+    debugLog('⚠️ Canvas de status não encontrado', 'warning');
+    return;
+  }
+  
+  charts.status = new Chart(statusCanvas, {
     type: 'doughnut',
     data: {
       labels: statusLabels,
@@ -1453,26 +1468,28 @@ function renderCharts(p) {
     }
   });
   
-  updateAnalistaChart();
-  updateCurvaS();
+  debugLog(`✅ Gráfico de status criado com ${statusLabels.length} categorias`, 'success');
 }
 
 function updateAnalistaChart() {
   const select = document.getElementById('analistaSelect');
   const selectedAnalista = select.value;
   
-  // Aplicar filtro quando selecionar um analista específico
-  if (selectedAnalista !== 'all') {
+  // Se selecionou um analista específico E o filtro atual é diferente
+  if (selectedAnalista !== 'all' && currentFilters.analista !== selectedAnalista) {
     currentFilters.analista = selectedAnalista;
-    updateFilters();
-    return; // updateFilters já vai chamar renderAll que inclui updateAnalistaChart
-  } else if (currentFilters.analista) {
-    // Limpar filtro de analista se voltar para "Todos"
-    currentFilters.analista = null;
-    updateFilters();
+    renderAll(); // Isso vai chamar updateAnalistaChart novamente, mas com o filtro já aplicado
     return;
   }
   
+  // Se voltou para "Todos" E havia um filtro de analista
+  if (selectedAnalista === 'all' && currentFilters.analista) {
+    currentFilters.analista = null;
+    renderAll();
+    return;
+  }
+  
+  // Renderizar o gráfico normalmente
   let dataToShow = getFilteredData();
   
   const analistasCount = {};
@@ -1486,7 +1503,13 @@ function updateAnalistaChart() {
   // Destruir o gráfico de analistas antes de recriá-lo
   destroyChart('analistas');
   
-  charts.analistas = new Chart(document.getElementById('analistas'), {
+  const analistasCanvas = document.getElementById('analistas');
+  if (!analistasCanvas) {
+    debugLog('⚠️ Canvas de analistas não encontrado', 'warning');
+    return;
+  }
+  
+  charts.analistas = new Chart(analistasCanvas, {
     type: 'bar',
     data: {
       labels: analistaLabels,
@@ -1503,6 +1526,8 @@ function updateAnalistaChart() {
       scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
     }
   });
+  
+  debugLog(`✅ Gráfico de analistas criado com ${analistaLabels.length} analistas`, 'success');
 }
 
 function updateCurvaS() {
@@ -1540,13 +1565,22 @@ function updateCurvaS() {
       
       curvaInfoEl.innerHTML = `<span class="semaforo-indicator semaforo-${semaforo}"></span><strong>Diferença: ${diferenca.toFixed(1)}%</strong> entre planejado e realizado | <strong>${projeto.Concluidas}/${projeto.Total}</strong> atividades`;
       curvaInfoEl.classList.add('show');
+    } else {
+      debugLog('⚠️ Projeto não encontrado para Curva S', 'warning');
+      return;
     }
   }
   
   // Destruir o gráfico de curva S antes de recriá-lo
   destroyChart('curve');
   
-  charts.curve = new Chart(document.getElementById('curve'), {
+  const curveCanvas = document.getElementById('curve');
+  if (!curveCanvas) {
+    debugLog('⚠️ Canvas de curva S não encontrado', 'warning');
+    return;
+  }
+  
+  charts.curve = new Chart(curveCanvas, {
     type: 'line',
     data: {
       labels: ['Início', 'Progresso Atual'],
@@ -1565,6 +1599,8 @@ function updateCurvaS() {
       scales: { y: { beginAtZero: true, max: 100, ticks: { callback: (v) => v + '%' } } }
     }
   });
+  
+  debugLog(`✅ Curva S criada para: ${selectedProject === 'all' ? 'Visão Geral' : selectedProject}`, 'success');
 }
 
 // ========== MODAL ==========
