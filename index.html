@@ -1137,6 +1137,24 @@ function parseCSVLine(line) {
   return result;
 }
 
+// ========== FUNÇÕES PARA DESTRUIR GRÁFICOS COM SEGURANÇA ==========
+function destroyChart(chartKey) {
+  if (charts[chartKey]) {
+    try {
+      charts[chartKey].destroy();
+      debugLog(`✅ Gráfico ${chartKey} destruído`, 'success');
+    } catch (error) {
+      debugLog(`⚠️ Erro ao destruir ${chartKey}: ${error.message}`, 'warning');
+    }
+    charts[chartKey] = null;
+  }
+}
+
+function destroyAllCharts() {
+  Object.keys(charts).forEach(key => destroyChart(key));
+  debugLog('🗑️ Todos os gráficos foram destruídos', 'info');
+}
+
 // ========== FETCH DATA ==========
 async function fetchData() {
   const loadingEl = document.getElementById('loading');
@@ -1402,8 +1420,7 @@ function renderKPIs(p) {
 
 function renderCharts(p) {
   if (p.length === 0) {
-    Object.values(charts).forEach(c => c.destroy());
-    charts = {};
+    destroyAllCharts();
     return;
   }
   
@@ -1412,7 +1429,8 @@ function renderCharts(p) {
     statusCount[x.Status] = (statusCount[x.Status] || 0) + 1;
   });
   
-  Object.values(charts).forEach(c => c.destroy());
+  // Destruir apenas o gráfico de status antes de recriá-lo
+  destroyChart('status');
   
   // Status Chart
   const statusLabels = Object.keys(statusCount);
@@ -1465,7 +1483,8 @@ function updateAnalistaChart() {
   const analistaLabels = Object.keys(analistasCount);
   const analistaColors = analistaLabels.map(n => getAnalistaColor(n));
   
-  if (charts.analistas) charts.analistas.destroy();
+  // Destruir o gráfico de analistas antes de recriá-lo
+  destroyChart('analistas');
   
   charts.analistas = new Chart(document.getElementById('analistas'), {
     type: 'bar',
@@ -1524,7 +1543,8 @@ function updateCurvaS() {
     }
   }
   
-  if (charts.curve) charts.curve.destroy();
+  // Destruir o gráfico de curva S antes de recriá-lo
+  destroyChart('curve');
   
   charts.curve = new Chart(document.getElementById('curve'), {
     type: 'line',
@@ -1580,7 +1600,10 @@ window.onclick = e => {
 // ========== INIT ==========
 window.onload = fetchData;
 setInterval(fetchData, 300000);
-window.addEventListener('beforeunload', clearAllFilters);
+window.addEventListener('beforeunload', () => {
+  destroyAllCharts();
+  clearAllFilters();
+});
 </script>
 </body>
 </html>
