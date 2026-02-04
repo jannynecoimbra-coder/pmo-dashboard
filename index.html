@@ -1062,7 +1062,14 @@ function updateDebugPanel() {
 // ========== FUNÇÕES AUXILIARES ==========
 function cleanKey(str) {
   if (!str) return "";
-  return str.toString().toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  // Remove acentos, espaços extras, pontos e converte para minúsculas
+  return str.toString()
+    .toLowerCase()
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")  // Remove acentos
+    .replace(/\./g, "")                 // Remove pontos
+    .replace(/\s+/g, " ");              // Normaliza espaços
 }
 
 function getAnalistaClass(nome) {
@@ -1186,7 +1193,10 @@ async function fetchData() {
     if (lines.length < 2) throw new Error("Planilha vazia");
     
     const headers = parseCSVLine(lines[0]);
-    debugLog(`📋 Colunas: ${headers.join(', ')}`);
+    debugLog(`📋 Headers da planilha (${headers.length} colunas):`, 'info');
+    headers.forEach((h, i) => {
+      debugLog(`   Col ${i}: "${h}" (clean: "${cleanKey(h)}")`, 'info');
+    });
     
     const colMap = {};
     headers.forEach((h, i) => colMap[cleanKey(h)] = i);
@@ -1203,17 +1213,26 @@ async function fetchData() {
       projeto: findCol(['projeto', 'nome']),
       status: findCol(['status', 'situacao']),
       analista: findCol(['analista', 'responsavel']),
-      obs: findCol(['obs', 'observacao']),
+      obs: findCol(['obs', 'observacao', 'observacoes']),
       dataPrevista: findCol(['data prevista', 'previsao', 'prazo']),
       concluidas: findCol(['concluidas']),
       validacao: findCol(['em validacao', 'validacao']),
-      liberacao: findCol(['ag liberacao', 'liberacao']),
+      liberacao: findCol(['ag liberacao', 'ag. liberacao', 'liberacao']),
       execucao: findCol(['em execucao', 'execucao']),
-      inicio: findCol(['ag inicio', 'inicio']),
-      descricao: findCol(['ag descricao', 'descricao'])
+      inicio: findCol(['ag inicio', 'ag. inicio', 'inicio']),
+      descricao: findCol(['ag descricao', 'ag. descricao', 'descricao'])
     };
     
-    debugLog(`🔍 Projeto: col ${colIdx.projeto}, Status: col ${colIdx.status}`);
+    debugLog(`🔍 Mapeamento de colunas:`, 'info');
+    debugLog(`   Projeto: col ${colIdx.projeto}`, 'info');
+    debugLog(`   Status: col ${colIdx.status}`, 'info');
+    debugLog(`   Analista: col ${colIdx.analista}`, 'info');
+    debugLog(`   Concluídas: col ${colIdx.concluidas}`, 'info');
+    debugLog(`   Validação: col ${colIdx.validacao}`, 'info');
+    debugLog(`   Liberação: col ${colIdx.liberacao}`, 'info');
+    debugLog(`   Execução: col ${colIdx.execucao}`, 'info');
+    debugLog(`   Início: col ${colIdx.inicio}`, 'info');
+    debugLog(`   Descrição: col ${colIdx.descricao}`, 'info');
     
     projectData = [];
     
@@ -1236,7 +1255,7 @@ async function fetchData() {
       const descricao = getNum(colIdx.descricao);
       const total = concluidas + validacao + liberacao + execucao + inicio + descricao;
       
-      projectData.push({
+      const projeto = {
         Projeto: getValue(colIdx.projeto),
         Status: getValue(colIdx.status, "Planejado"),
         Analista: getValue(colIdx.analista, "N/A"),
@@ -1249,7 +1268,17 @@ async function fetchData() {
         Descricao: descricao,
         Total: total,
         Obs: getValue(colIdx.obs, "Sem observações.")
-      });
+      };
+      
+      // Log detalhado do primeiro projeto e de "Segurança de Pagamento"
+      if (i === 1 || projeto.Projeto.toLowerCase().includes('seguranca')) {
+        debugLog(`📦 Projeto: ${projeto.Projeto}`, 'info');
+        debugLog(`   Concluídas: ${concluidas}, Validação: ${validacao}, Liberação: ${liberacao}`, 'info');
+        debugLog(`   Execução: ${execucao}, Início: ${inicio}, Descrição: ${descricao}`, 'info');
+        debugLog(`   Total: ${total}`, 'info');
+      }
+      
+      projectData.push(projeto);
     }
     
     debugLog(`✅ ${projectData.length} projetos carregados!`, 'success');
