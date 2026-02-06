@@ -159,6 +159,74 @@ header span{
   gap: 8px;
 }
 
+/* FILTROS NOS CABEÇALHOS DA TABELA */
+.filter-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-header-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.header-filter-select {
+  padding: 6px 10px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  background: white;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%23334155' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 28px;
+  width: 100%;
+}
+
+.header-filter-select:hover {
+  border-color: var(--purple);
+}
+
+.header-filter-select:focus {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.header-filter-select.active {
+  border-color: var(--purple);
+  background-color: #f3e8ff;
+}
+
+.btn-clear-table-filters {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-clear-table-filters:hover {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+}
+
 .kpis{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -288,467 +356,168 @@ header span{
   display: block;
 }
 
+.chart-info strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .semaforo-indicator {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   margin-right: 6px;
 }
 
-.semaforo-verde { background: var(--green); }
-.semaforo-amarelo { background: var(--yellow); }
-.semaforo-vermelho { background: var(--red); }
+.semaforo-verde { background-color: #10b981; }
+.semaforo-amarelo { background-color: #f59e0b; }
+.semaforo-vermelho { background-color: #ef4444; }
 
-.chart-container {
+.chart-canvas-wrapper {
   flex: 1;
   position: relative;
   min-height: 0;
+}
+
+.panel {
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 30px;
+}
+
+.panel-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.panel-title i {
+  color: var(--blue);
+}
+
+table {
   width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
 }
 
-.table-box{
-  background:var(--panel);
-  border-radius:18px;
-  padding:24px;
-  box-shadow:var(--shadow);
-  overflow-x: auto;
-}
-
-.table-title{
-  font-size:16px;
-  font-weight:700;
-  margin-bottom:20px;
-  color:var(--text);
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
-  min-width: 900px;
-}
-
-th{
-  background:#fafafa;
-  padding:16px 12px;
-  font-size:11px;
-  text-transform:uppercase;
-  color:var(--muted);
-  text-align:left;
+thead {
+  background: #f8fafc;
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom:2px solid var(--border);
 }
 
-th:nth-child(1) { width: 20%; }
-th:nth-child(2) { width: 12%; }
-th:nth-child(3) { width: 12%; text-align: center; }
-th:nth-child(4) { width: 12%; text-align: center; }
-th:nth-child(5) { width: 20%; }
-th:nth-child(6) { width: 8%; text-align: center; }
-
-td{
-  padding:14px 12px;
-  border-bottom:1px solid #f1f5f9;
+thead th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 2px solid var(--border);
+  vertical-align: top;
 }
 
-td:nth-child(3), td:nth-child(4), td:nth-child(6) {
-  text-align: center;
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
 }
 
-tr:hover{background:#f8fafc}
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+tbody td {
+  padding: 16px;
+}
 
 .project-name {
-  cursor: pointer;
+  font-weight: 600;
   color: var(--blue);
-  font-weight: 700;
-  transition: all 0.2s;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
 .project-name:hover {
+  color: var(--purple);
   text-decoration: underline;
-  color: var(--text);
 }
 
-.badge{
-  padding:6px 12px;
-  border-radius:20px;
-  font-size:11px;
-  font-weight:700;
+.badge {
   display: inline-block;
-  white-space: nowrap;
-  text-transform: uppercase;
-}
-
-.badge.emandamento, .badge.em-andamento, .badge.andamento {
-  background:var(--status-andamento-bg);
-  color:var(--status-andamento-text);
-}
-
-.badge.paralisado{
-  background:var(--status-paralisado-bg);
-  color:var(--status-paralisado-text);
-}
-
-.badge.agcliente, .badge.ag-cliente, .badge.aguardandocliente {
-  background:var(--status-cliente-bg);
-  color:var(--status-cliente-text);
-}
-
-.badge.planejado{
-  background:var(--status-planejado-bg);
-  color:var(--status-planejado-text);
-}
-
-.badge.concluido{
-  background:var(--status-concluido-bg);
-  color:var(--status-concluido-text);
-}
-
-.analista-bold { font-weight: 800; }
-.color-abraao { color: var(--color-abraao) !important; }
-.color-dalto { color: var(--color-dalto) !important; } 
-.color-jonathas { color: var(--color-jonathas) !important; } 
-.color-lucas { color: var(--color-lucas) !important; }       
-.color-efraim { color: var(--color-efraim) !important; }     
-.color-cristhian { color: var(--color-cristhian) !important; }  
-.color-ernane { color: var(--color-ernane) !important; }       
-.color-william { color: var(--color-william) !important; }     
-.color-default { color: var(--text) !important; }
-
-.progress{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.bar{
-  flex:1;
-  height:8px;
-  background:#e5e7eb;
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.fill{
-  height:100%;
-  background:linear-gradient(90deg, var(--blue), var(--green));
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius:10px;
-}
-
-/* MODAL */
-#modal{
-  position:fixed;
-  inset:0;
-  background:rgba(15,23,42,0.4);
-  backdrop-filter: blur(4px);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index: 1000;
-  padding: 20px;
-}
-
-.modal-content{
-  background:#fff;
-  padding:32px;
-  border-radius:20px;
-  width:90%;
-  max-width:600px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.2);
-  transform: scale(0.9);
-  animation: modalIn 0.3s forwards;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-@keyframes modalIn {
-  to { transform: scale(1); }
-}
-
-.modal-content h2{
-  margin-bottom:20px;
-  color: var(--blue);
-  font-size: 22px;
-  border-bottom: 2px solid var(--border);
-  padding-bottom: 12px;
-}
-
-.modal-content .project-info {
-  background: #f8fafc;
-  padding: 16px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
-
-.modal-content .info-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.modal-content .info-row:last-child {
-  border-bottom: none;
-}
-
-.modal-content .info-label {
-  font-weight: 600;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.modal-content .info-value {
-  font-weight: 700;
-  color: var(--text);
-  font-size: 14px;
-}
-
-.modal-content .tasks-breakdown {
-  margin-top: 20px;
-}
-
-.modal-content .tasks-breakdown h3 {
-  font-size: 15px;
-  margin-bottom: 16px;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.modal-content .task-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background: white;
-  border-radius: 10px;
-  margin-bottom: 8px;
-  border: 1px solid var(--border);
-  transition: all 0.2s;
-}
-
-.modal-content .task-item:hover {
-  border-color: var(--blue);
-  transform: translateX(4px);
-}
-
-.modal-content .task-label {
-  font-size: 13px;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.modal-content .task-icon {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  font-size: 11px;
-}
-
-.modal-content .task-count {
-  font-weight: 800;
-  font-size: 18px;
-  color: var(--blue);
-  min-width: 40px;
-  text-align: right;
-}
-
-.modal-content .obs-section {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 2px solid var(--border);
-}
-
-.modal-content .obs-section h3 {
-  font-size: 14px;
-  margin-bottom: 10px;
-  color: var(--muted);
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
-.modal-content .obs-section p {
-  line-height: 1.7;
-  color: var(--text);
-  white-space: pre-wrap;
-  font-size: 14px;
-}
-
-.btn-modal{
-  border:none;
-  background:var(--blue);
-  color:#fff;
-  padding:14px;
-  border-radius:12px;
-  width:100%;
-  font-weight:700;
-  margin-top:24px;
-  cursor:pointer;
-  transition: all 0.2s;
-  font-size: 14px;
-}
-
-.btn-modal:hover { 
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-}
-
-/* FLOATING BUTTONS */
-.floating-buttons {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 999;
-}
-
-.float-btn {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  position: relative;
-}
-
-.float-btn:hover {
-  transform: scale(1.1) translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-}
-
-.float-btn:active {
-  transform: scale(0.95);
-}
-
-.debug-btn {
-  background: var(--text);
-  color: white;
-}
-
-.debug-btn:hover {
-  background: var(--blue);
-}
-
-.scroll-top-btn {
-  background: var(--green);
-  color: white;
-  display: none;
-}
-
-.scroll-top-btn.show {
-  display: flex;
-  animation: fadeInUp 0.3s ease;
-}
-
-.scroll-top-btn:hover {
-  background: var(--blue);
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.float-btn::before {
-  content: attr(data-tooltip);
-  position: absolute;
-  right: 70px;
-  background: var(--text);
-  color: white;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.float-btn::after {
-  content: '';
-  position: absolute;
-  right: 60px;
-  border: 6px solid transparent;
-  border-left-color: var(--text);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
-}
-
-.float-btn:hover::before,
-.float-btn:hover::after {
-  opacity: 1;
-}
-
-.debug-panel {
-  position: fixed;
-  bottom: 170px;
-  right: 20px;
-  width: 500px;
-  max-width: calc(100vw - 40px);
-  max-height: 400px;
-  background: #1e293b;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-  display: none;
-  flex-direction: column;
-  z-index: 998;
-  font-family: 'Courier New', monospace;
-  font-size: 11px;
-  overflow-y: auto;
-}
-
-.debug-line {
-  padding: 4px 0;
-  color: #94a3b8;
-  border-bottom: 1px solid #334155;
-}
-
-.debug-error { color: #ef4444; font-weight: 600; }
-.debug-success { color: #10b981; }
-.debug-warning { color: #f59e0b; }
-
-#loading {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background: var(--blue);
-  color: white;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  display: none;
-  z-index: 1100;
-  box-shadow: var(--shadow);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.em-andamento {
+  background: var(--status-andamento-bg);
+  color: var(--status-andamento-text);
+}
+
+.paralisado {
+  background: var(--status-paralisado-bg);
+  color: var(--status-paralisado-text);
+}
+
+.ag-cliente {
+  background: var(--status-cliente-bg);
+  color: var(--status-cliente-text);
+}
+
+.planejado {
+  background: var(--status-planejado-bg);
+  color: var(--status-planejado-text);
+}
+
+.concluido {
+  background: var(--status-concluido-bg);
+  color: var(--status-concluido-text);
+}
+
+.analista-bold {
+  font-weight: 700;
+}
+
+.Abraão { color: var(--color-abraao); }
+.Dalto { color: var(--color-dalto); }
+.Jonathas { color: var(--color-jonathas); }
+.Lucas { color: var(--color-lucas); }
+.Efraim { color: var(--color-efraim); }
+.Cristhian { color: var(--color-cristhian); }
+.Ernane { color: var(--color-ernane); }
+.William { color: var(--color-william); }
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bar {
+  flex: 1;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  border-radius: 10px;
+  transition: width 0.3s ease;
 }
 
 .no-results {
@@ -765,627 +534,609 @@ tr:hover{background:#f8fafc}
 
 .no-results h3 {
   font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
   margin-bottom: 8px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: white;
+  padding: 32px;
+  border-radius: 20px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+}
+
+.modal-header h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--blue);
+}
+
+.close-modal {
+  background: var(--border);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.close-modal:hover {
+  background: var(--red);
+  color: white;
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  display: grid;
+  gap: 16px;
+}
+
+.modal-field {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.modal-field:last-child {
+  border-bottom: none;
+}
+
+.modal-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.modal-value {
+  font-size: 14px;
+  font-weight: 500;
   color: var(--text);
 }
 
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 40px;
+}
+
+footer a {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
-  body { padding: 12px; }
-  header { flex-direction: column; align-items: flex-start; }
-  .kpis { grid-template-columns: 1fr; }
-  .charts { grid-template-columns: 1fr; }
-  .table-box { padding: 16px; }
-  .debug-panel { width: calc(100vw - 40px); bottom: 150px; right: 12px; }
-  .floating-buttons { bottom: 12px; right: 12px; }
-  .float-btn { width: 50px; height: 50px; font-size: 18px; }
-  .modal-content { padding: 24px; }
+  body {
+    padding: 16px;
+  }
+  
+  header h1 {
+    font-size: 20px;
+  }
+  
+  .kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .charts {
+    grid-template-columns: 1fr;
+  }
+  
+  table {
+    font-size: 11px;
+  }
+  
+  .modal-field {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  
+  .table-filters-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
 
 <body>
-<div id="loading">🔄 Sincronizando dados...</div>
-
 <div class="container">
 
 <header>
-  <h1>OKVENDAS <span>PMO</span></h1>
+  <div>
+    <h1>PMO | OkVendas <span>Dashboard Executivo</span></h1>
+  </div>
   <div class="header-actions">
     <button class="btn-clear-filters" id="btnClearFilters" onclick="clearAllFilters()">
-      <i class="fa-solid fa-filter-circle-xmark"></i> Limpar Filtros
+      <i class="fa-solid fa-filter-circle-xmark"></i>
+      Limpar Filtros Gerais
     </button>
     <button class="btn-refresh" onclick="fetchData()">
-      <i class="fa-solid fa-arrows-rotate" id="refresh-icon"></i> Atualizar Dados
+      <i class="fa-solid fa-rotate" id="refreshIcon"></i>
+      Atualizar
     </button>
-    <div style="font-size:13px;color:var(--muted)">
-      <i class="fa-solid fa-circle" style="color:var(--green);font-size:8px"></i>
-      Auto-sincronização ativa
-    </div>
   </div>
 </header>
 
 <div class="active-filters" id="activeFilters">
-  <span class="filter-label"><i class="fa-solid fa-filter"></i> Filtros ativos:</span>
-  <div id="filterTags"></div>
+  <span class="filter-label">Filtros ativos:</span>
 </div>
 
 <div class="kpis">
-  <div class="kpi active" onclick="filterByStatus('all')">
-    <i class="fa-solid fa-folder-tree"></i>
-    <h3>Total Projetos</h3>
+  <div class="kpi" onclick="filterByStatus(null)">
+    <i class="fa-solid fa-diagram-project"></i>
+    <h3>Total de Projetos</h3>
     <p id="kTotal">0</p>
     <div class="kpi-hint">Clique para ver todos</div>
   </div>
+  
   <div class="kpi" onclick="filterByStatus('andamento')">
-    <i class="fa-solid fa-rocket"></i>
+    <i class="fa-solid fa-spinner"></i>
     <h3>Em Andamento</h3>
-    <p id="kAtivos">0</p>
+    <p id="kAtivos" style="color:var(--green)">0</p>
     <div class="kpi-hint">Clique para filtrar</div>
   </div>
+  
   <div class="kpi" onclick="filterByStatus('paralisado')">
     <i class="fa-solid fa-pause"></i>
-    <h3>Pausados</h3>
-    <p id="kPausados">0</p>
+    <h3>Paralisados</h3>
+    <p id="kPausados" style="color:var(--red)">0</p>
     <div class="kpi-hint">Clique para filtrar</div>
   </div>
+  
   <div class="kpi" onclick="filterByStatus('cliente')">
-    <i class="fa-solid fa-clock-rotate-left"></i>
-    <h3>Ag. Cliente</h3>
-    <p id="kCliente">0</p>
+    <i class="fa-solid fa-user-clock"></i>
+    <h3>Aguardando Cliente</h3>
+    <p id="kCliente" style="color:var(--purple)">0</p>
     <div class="kpi-hint">Clique para filtrar</div>
   </div>
 </div>
 
 <div class="charts">
-  <!-- 1. CURVA S -->
   <div class="chart-box">
     <div class="chart-header">
-      <div class="chart-title">Acompanhamento Curva S</div>
-      <select class="chart-select" id="projectSelect" onchange="updateCurvaS()">
-        <option value="all">Visão Geral</option>
-      </select>
+      <span class="chart-title">Status dos Projetos</span>
     </div>
-    <div class="chart-container"><canvas id="curve"></canvas></div>
-    <div class="chart-info" id="curvaInfo"></div>
+    <div class="chart-canvas-wrapper">
+      <canvas id="status"></canvas>
+    </div>
   </div>
   
-  <!-- 2. CARGA POR ANALISTA -->
   <div class="chart-box">
     <div class="chart-header">
-      <div class="chart-title">Carga por Analista</div>
-      <select class="chart-select" id="analistaSelect" onchange="updateAnalistaChart()">
+      <span class="chart-title">Projetos por Analista</span>
+      <select id="analistaSelect" class="chart-select" onchange="updateAnalistaChart()">
         <option value="all">Todos os Analistas</option>
       </select>
     </div>
-    <div class="chart-container"><canvas id="analistas"></canvas></div>
+    <div class="chart-canvas-wrapper">
+      <canvas id="analistas"></canvas>
+    </div>
   </div>
   
-  <!-- 3. DISTRIBUIÇÃO DE STATUS -->
   <div class="chart-box">
     <div class="chart-header">
-      <div class="chart-title">Distribuição de Status</div>
+      <span class="chart-title">Curva S - Evolução</span>
+      <select id="projectSelect" class="chart-select" onchange="updateCurvaS()">
+        <option value="all">Visão Geral</option>
+      </select>
     </div>
-    <div class="chart-container"><canvas id="status"></canvas></div>
+    <div class="chart-canvas-wrapper">
+      <canvas id="curve"></canvas>
+    </div>
+    <div class="chart-info" id="curvaInfo"></div>
   </div>
 </div>
 
-<div class="table-box">
-<h2 class="table-title">Detalhamento de Projetos</h2>
-<table>
-<thead>
-<tr>
-  <th>Projeto</th>
-  <th>Data Prevista</th>
-  <th>Analista</th>
-  <th>Status</th>
-  <th>Evolução</th>
-  <th>Info</th>
-</tr>
-</thead>
-<tbody id="tbody"></tbody>
-</table>
+
+<div class="panel">
+  <div class="panel-title">
+    <i class="fa-solid fa-table"></i>
+    Detalhamento de Projetos
+    <button class="btn-clear-table-filters" id="btnClearTableFilters" onclick="clearTableFilters()" style="margin-left: auto;">
+      <i class="fa-solid fa-filter-circle-xmark"></i>
+      Limpar Filtros
+    </button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          <div class="filter-header">
+            <span class="filter-header-label">PROJETO</span>
+            <select id="tableProjectFilter" class="header-filter-select" onchange="applyTableFilters()">
+              <option value="">Todos</option>
+            </select>
+          </div>
+        </th>
+        <th>DATA PREVISTA</th>
+        <th>
+          <div class="filter-header">
+            <span class="filter-header-label">ANALISTA</span>
+            <select id="tableAnalistaFilter" class="header-filter-select" onchange="applyTableFilters()">
+              <option value="">Todos</option>
+            </select>
+          </div>
+        </th>
+        <th>
+          <div class="filter-header">
+            <span class="filter-header-label">STATUS</span>
+            <select id="tableStatusFilter" class="header-filter-select" onchange="applyTableFilters()">
+              <option value="">Todos</option>
+            </select>
+          </div>
+        </th>
+        <th>EVOLUÇÃO</th>
+        <th>INFO</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+      <tr>
+        <td colspan="6">
+          <div class="no-results">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+            <h3>Carregando dados...</h3>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
+<footer>
+  Dashboard desenvolvido por <a href="#">OkVendas PMO</a> | Atualizado automaticamente a cada 5 minutos
+</footer>
 
 </div>
 
-<div id="modal">
+<div id="modal" class="modal">
   <div class="modal-content">
-    <h2 id="mTitle"></h2>
-    <div class="project-info">
-      <div class="info-row">
-        <span class="info-label">Analista Responsável:</span>
-        <span class="info-value" id="mAnalista"></span>
+    <div class="modal-header">
+      <h2 id="mTitle">Detalhes do Projeto</h2>
+      <button class="close-modal" onclick="closeModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-field">
+        <span class="modal-label">Analista</span>
+        <span class="modal-value" id="mAnalista">-</span>
       </div>
-      <div class="info-row">
-        <span class="info-label">Status Atual:</span>
-        <span class="info-value" id="mStatus"></span>
+      <div class="modal-field">
+        <span class="modal-label">Status</span>
+        <span class="modal-value" id="mStatus">-</span>
       </div>
-      <div class="info-row">
-        <span class="info-label">Data Prevista:</span>
-        <span class="info-value" id="mData"></span>
+      <div class="modal-field">
+        <span class="modal-label">Data Prevista</span>
+        <span class="modal-value" id="mData">-</span>
+      </div>
+      <div class="modal-field">
+        <span class="modal-label">Concluídas</span>
+        <span class="modal-value" id="mConcluidas">-</span>
+      </div>
+      <div class="modal-field">
+        <span class="modal-label">Em Validação</span>
+        <span class="modal-value" id="mValidacao">-</span>
+      </div>
+      <div class="modal-field">
+        <span class="modal-label">Lib. Produção</span>
+        <span class="modal-value" id="mLiberacao">-</span>
+      </div>
+      <div class="modal-field">
+        <span class="modal-label">Em Execução</span>
+        <span class="modal-value" id="mExecucao">-</span>
+      </div>
+      <div class="modal-field">
+        <span class="modal-label">Início</span>
+        <span class="modal-value" id="mInicio">-</span>
+      </div>
+      <div class="modal-field">
+        <span class="modal-label">Descrição</span>
+        <span class="modal-value" id="mDescricao">-</span>
+      </div>
+      <div class="modal-field">
+        <span class="modal-label">Total Atividades</span>
+        <span class="modal-value" id="mTotal">-</span>
+      </div>
+      <div class="modal-field">
+        <span class="modal-label">Observações</span>
+        <span class="modal-value" id="mObs">-</span>
       </div>
     </div>
-    
-    <div class="tasks-breakdown">
-      <h3><i class="fa-solid fa-list-check"></i> Detalhamento de Tarefas</h3>
-      
-      <div class="task-item">
-        <div class="task-label">
-          <div class="task-icon" style="background: #dcfce7; color: #166534;">
-            <i class="fa-solid fa-check"></i>
-          </div>
-          Concluídas
-        </div>
-        <div class="task-count" id="mConcluidas">0</div>
-      </div>
-      
-      <div class="task-item">
-        <div class="task-label">
-          <div class="task-icon" style="background: #dbeafe; color: #1e40af;">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </div>
-          Em Validação
-        </div>
-        <div class="task-count" id="mValidacao">0</div>
-      </div>
-      
-      <div class="task-item">
-        <div class="task-label">
-          <div class="task-icon" style="background: #fef3c7; color: #a16207;">
-            <i class="fa-solid fa-unlock"></i>
-          </div>
-          Ag. Liberação
-        </div>
-        <div class="task-count" id="mLiberacao">0</div>
-      </div>
-      
-      <div class="task-item">
-        <div class="task-label">
-          <div class="task-icon" style="background: #e0e7ff; color: #4338ca;">
-            <i class="fa-solid fa-gears"></i>
-          </div>
-          Em Execução
-        </div>
-        <div class="task-count" id="mExecucao">0</div>
-      </div>
-      
-      <div class="task-item">
-        <div class="task-label">
-          <div class="task-icon" style="background: #f3e8ff; color: #7e22ce;">
-            <i class="fa-solid fa-hourglass-start"></i>
-          </div>
-          Ag. Início
-        </div>
-        <div class="task-count" id="mInicio">0</div>
-      </div>
-      
-      <div class="task-item">
-        <div class="task-label">
-          <div class="task-icon" style="background: #fee2e2; color: #991b1b;">
-            <i class="fa-solid fa-file-lines"></i>
-          </div>
-          Ag. Descrição
-        </div>
-        <div class="task-count" id="mDescricao">0</div>
-      </div>
-      
-      <div class="task-item" style="background: #f0f9ff; border: 2px solid var(--blue);">
-        <div class="task-label" style="font-weight: 700; color: var(--blue);">
-          <div class="task-icon" style="background: var(--blue); color: white;">
-            <i class="fa-solid fa-list"></i>
-          </div>
-          Total de Tarefas
-        </div>
-        <div class="task-count" id="mTotal" style="font-size: 22px;">0</div>
-      </div>
-    </div>
-    
-    <div class="obs-section">
-      <h3><i class="fa-solid fa-note-sticky"></i> Observações</h3>
-      <p id="mObs"></p>
-    </div>
-    
-    <button class="btn-modal" onclick="closeModal()">Fechar Detalhes</button>
   </div>
 </div>
-
-<!-- BOTÕES FLUTUANTES -->
-<div class="floating-buttons">
-  <button class="float-btn scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" data-tooltip="Voltar ao Topo">
-    <i class="fa-solid fa-arrow-up"></i>
-  </button>
-  <button class="float-btn debug-btn" id="debugBtn" onclick="toggleDebug()" data-tooltip="Console de Debug">
-    <i class="fa-solid fa-bug"></i>
-  </button>
-</div>
-
-<div class="debug-panel" id="debugPanel"></div>
 
 <script>
-// ========== CONFIGURAÇÃO ==========
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSN6220bHIwZ9pzMZkhQ1hBT32sofXNn-FSvJYDNGFVKNCtEhpTqF3yg4zz-p25nALcm1J33QeLR_pn/pub?gid=378165818&single=true&output=csv';
-
 let projectData = [];
-let charts = {};
 let currentFilters = { analista: null, status: null };
+let tableFilters = { projeto: '', analista: '', status: '' }; // NOVO: filtros da tabela
+let charts = { status: null, analistas: null, curve: null };
+const DEBUG = true;
 
-// ========== SCROLL TO TOP ==========
-window.addEventListener('scroll', () => {
-  const scrollTopBtn = document.getElementById('scrollTopBtn');
-  if (window.pageYOffset > 300) {
-    scrollTopBtn.classList.add('show');
-  } else {
-    scrollTopBtn.classList.remove('show');
-  }
-});
-
-function scrollToTop() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
+function debugLog(msg, type = 'info') {
+  if (!DEBUG) return;
+  const styles = {
+    info: 'color: #0ea5e9; font-weight: bold',
+    success: 'color: #10b981; font-weight: bold',
+    warning: 'color: #f59e0b; font-weight: bold',
+    error: 'color: #ef4444; font-weight: bold'
+  };
+  console.log(`%c[PMO] ${msg}`, styles[type] || styles.info);
 }
 
-// ========== DEBUG ==========
-const debugLogs = [];
-const MAX_DEBUG_LOGS = 50;
-
-function debugLog(message, type = 'info') {
-  const timestamp = new Date().toLocaleTimeString('pt-BR');
-  debugLogs.push({ timestamp, message, type });
-  if (debugLogs.length > MAX_DEBUG_LOGS) debugLogs.shift();
-  
-  const emoji = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
-  console.log(`${emoji} [${timestamp}] ${message}`);
-  updateDebugPanel();
-}
-
-function toggleDebug() {
-  const panel = document.getElementById('debugPanel');
-  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-  if (panel.style.display === 'block') updateDebugPanel();
-}
-
-function updateDebugPanel() {
-  const panel = document.getElementById('debugPanel');
-  if (panel.style.display === 'block') {
-    panel.innerHTML = debugLogs.map(log => {
-      const className = log.type === 'error' ? 'debug-error' : 
-                        log.type === 'success' ? 'debug-success' : 
-                        log.type === 'warning' ? 'debug-warning' : '';
-      return `<div class="debug-line ${className}">[${log.timestamp}] ${log.message}</div>`;
-    }).reverse().join('');
-    panel.scrollTop = 0;
-  }
-}
-
-// ========== FUNÇÕES AUXILIARES ==========
 function cleanKey(str) {
-  if (!str) return "";
-  // Remove acentos, espaços extras, pontos e converte para minúsculas
-  return str.toString()
-    .toLowerCase()
-    .trim()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")  // Remove acentos
-    .replace(/\./g, "")                 // Remove pontos
-    .replace(/\s+/g, " ");              // Normaliza espaços
+  return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
 function getAnalistaClass(nome) {
-  if (!nome) return 'color-default';
-  const n = cleanKey(nome);
-  if (n.includes('abraao')) return 'color-abraao';
-  if (n.includes('dalto')) return 'color-dalto';
-  if (n.includes('jonathas')) return 'color-jonathas';
-  if (n.includes('lucas')) return 'color-lucas';
-  if (n.includes('efraim')) return 'color-efraim';
-  if (n.includes('cristhian')) return 'color-cristhian';
-  if (n.includes('ernane')) return 'color-ernane';
-  if (n.includes('william')) return 'color-william';
-  return 'color-default';
+  const map = {
+    "Abraão": "Abraão", "Dalto": "Dalto", "Jonathas": "Jonathas",
+    "Lucas": "Lucas", "Efraim": "Efraim", "Cristhian": "Cristhian",
+    "Ernane": "Ernane", "William": "William"
+  };
+  return map[nome] || "";
 }
 
 function getAnalistaColor(nome) {
-  if (!nome) return '#94a3b8';
-  const n = cleanKey(nome);
-  if (n.includes('abraao')) return '#FFB800';
-  if (n.includes('dalto')) return '#f97316';
-  if (n.includes('jonathas')) return '#38bdf8';
-  if (n.includes('lucas')) return '#0369a1';
-  if (n.includes('efraim')) return '#0d9488';
-  if (n.includes('cristhian')) return '#475569';
-  if (n.includes('ernane')) return '#1e3a8a';
-  if (n.includes('william')) return '#16a34a';
-  return '#94a3b8';
+  const map = {
+    "Abraão": "#FFB800", "Dalto": "#f97316", "Jonathas": "#38bdf8",
+    "Lucas": "#0369a1", "Efraim": "#0d9488", "Cristhian": "#475569",
+    "Ernane": "#1e3a8a", "William": "#16a34a"
+  };
+  return map[nome] || "#94a3b8";
 }
 
 function getStatusColor(status) {
-  const s = cleanKey(status);
-  if (s.includes('andamento')) return '#10b981';
-  if (s.includes('paralisado')) return '#ef4444';
-  if (s.includes('cliente')) return '#8b5cf6';
-  if (s.includes('planejado')) return '#94a3b8';
-  if (s.includes('concluido')) return '#0ea5e9';
-  return '#f59e0b';
+  const key = cleanKey(status);
+  if (key.includes("andamento")) return "#10b981";
+  if (key.includes("paralisado")) return "#ef4444";
+  if (key.includes("cliente")) return "#8b5cf6";
+  if (key.includes("planejado")) return "#94a3b8";
+  if (key.includes("concluido")) return "#0ea5e9";
+  return "#94a3b8";
 }
 
 function getSemaforoColor(diferenca) {
-  if (Math.abs(diferenca) <= 10) return 'verde';
-  if (Math.abs(diferenca) <= 25) return 'amarelo';
+  if (diferenca <= 10) return 'verde';
+  if (diferenca <= 30) return 'amarelo';
   return 'vermelho';
 }
 
-function parseCSVLine(line) {
-  const result = [];
-  let current = '';
-  let insideQuotes = false;
-  
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    const nextChar = line[i + 1];
-    
-    if (char === '"') {
-      if (insideQuotes && nextChar === '"') {
-        current += '"';
-        i++;
-      } else {
-        insideQuotes = !insideQuotes;
-      }
-    } else if (char === ',' && !insideQuotes) {
-      result.push(current.trim());
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-  
-  result.push(current.trim());
-  return result;
-}
-
-// ========== FUNÇÕES PARA DESTRUIR GRÁFICOS COM SEGURANÇA ==========
-function destroyChart(chartKey) {
-  if (charts[chartKey]) {
-    try {
-      charts[chartKey].destroy();
-      debugLog(`✅ Gráfico ${chartKey} destruído`, 'success');
-    } catch (error) {
-      debugLog(`⚠️ Erro ao destruir ${chartKey}: ${error.message}`, 'warning');
-    }
-    charts[chartKey] = null;
+function destroyChart(chartName) {
+  if (charts[chartName]) {
+    debugLog(`🗑️ Destruindo gráfico: ${chartName}`, 'warning');
+    charts[chartName].destroy();
+    charts[chartName] = null;
   }
 }
 
 function destroyAllCharts() {
+  debugLog('🗑️ Destruindo todos os gráficos', 'warning');
   Object.keys(charts).forEach(key => destroyChart(key));
-  debugLog('🗑️ Todos os gráficos foram destruídos', 'info');
 }
 
 // ========== FETCH DATA ==========
 async function fetchData() {
-  const loadingEl = document.getElementById('loading');
-  const refreshIcon = document.getElementById('refresh-icon');
+  const icon = document.getElementById('refreshIcon');
+  icon.classList.add('spinning');
   
-  loadingEl.style.display = 'block';
-  if (refreshIcon) refreshIcon.classList.add('spinning');
-  
-  debugLog('🔄 Iniciando carregamento...');
-  debugLog(`📊 URL: ${SHEET_CSV_URL.substring(0, 80)}...`);
+  debugLog('🔄 Iniciando busca de dados...', 'info');
   
   try {
-    const url = `${SHEET_CSV_URL}&cachebust=${Date.now()}`;
-    debugLog('🌐 Fazendo fetch...');
+    const response = await fetch("https://script.google.com/macros/s/AKfycbwBDw-TLmRvqC8Vd7q3yxE_B6hb0i3vPWqgWZqy4U8mBVTdJC1_O7UKXDOlW3DXxKo/exec");
+    const json = await response.json();
     
-    const response = await fetch(url);
-    debugLog(`📡 Status: ${response.status}`, response.ok ? 'success' : 'error');
-    
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    if (!json.data || json.data.length === 0) {
+      debugLog('⚠️ Nenhum dado encontrado', 'warning');
+      return;
     }
     
-    const csvData = await response.text();
-    debugLog(`📝 Recebido: ${csvData.length} caracteres`);
+    projectData = json.data;
+    debugLog(`✅ ${projectData.length} projetos carregados`, 'success');
     
-    const lines = csvData.split(/\r?\n/).filter(l => l.trim());
-    debugLog(`📊 Linhas: ${lines.length}`, 'success');
-    
-    if (lines.length < 2) throw new Error("Planilha vazia");
-    
-    const headers = parseCSVLine(lines[0]);
-    debugLog(`📋 Headers da planilha (${headers.length} colunas):`, 'info');
-    headers.forEach((h, i) => {
-      debugLog(`   Col ${i}: "${h}" (clean: "${cleanKey(h)}")`, 'info');
-    });
-    
-    const colMap = {};
-    headers.forEach((h, i) => colMap[cleanKey(h)] = i);
-    
-    const findCol = (names) => {
-      for (let n of names) {
-        const idx = colMap[cleanKey(n)];
-        if (idx !== undefined) return idx;
-      }
-      return -1;
-    };
-    
-    const colIdx = {
-      projeto: findCol(['projeto', 'nome']),
-      status: findCol(['status', 'situacao']),
-      analista: findCol(['analista', 'responsavel']),
-      obs: findCol(['obs', 'observacao', 'observacoes']),
-      dataPrevista: findCol(['data prevista', 'previsao', 'prazo']),
-      concluidas: findCol(['concluidas']),
-      validacao: findCol(['em validacao', 'validacao']),
-      liberacao: findCol(['ag liberacao', 'ag. liberacao', 'liberacao']),
-      execucao: findCol(['em execucao', 'execucao']),
-      inicio: findCol(['ag inicio', 'ag. inicio', 'inicio']),
-      descricao: findCol(['ag descricao', 'ag. descricao', 'descricao'])
-    };
-    
-    debugLog(`🔍 Mapeamento de colunas:`, 'info');
-    debugLog(`   Projeto: col ${colIdx.projeto}`, 'info');
-    debugLog(`   Status: col ${colIdx.status}`, 'info');
-    debugLog(`   Analista: col ${colIdx.analista}`, 'info');
-    debugLog(`   Concluídas: col ${colIdx.concluidas}`, 'info');
-    debugLog(`   Validação: col ${colIdx.validacao}`, 'info');
-    debugLog(`   Liberação: col ${colIdx.liberacao}`, 'info');
-    debugLog(`   Execução: col ${colIdx.execucao}`, 'info');
-    debugLog(`   Início: col ${colIdx.inicio}`, 'info');
-    debugLog(`   Descrição: col ${colIdx.descricao}`, 'info');
-    
-    projectData = [];
-    
-    for (let i = 1; i < lines.length; i++) {
-      const values = parseCSVLine(lines[i]);
-      if (colIdx.projeto < 0 || !values[colIdx.projeto]?.trim()) continue;
-      
-      const getValue = (idx, def = "") => (idx >= 0 && values[idx]) ? values[idx].trim() : def;
-      const getNum = (idx) => {
-        if (idx < 0) return 0;
-        const val = values[idx]?.trim() || "0";
-        return parseInt(val.replace(/\D/g, '')) || 0;
-      };
-      
-      const concluidas = getNum(colIdx.concluidas);
-      const validacao = getNum(colIdx.validacao);
-      const liberacao = getNum(colIdx.liberacao);
-      const execucao = getNum(colIdx.execucao);
-      const inicio = getNum(colIdx.inicio);
-      const descricao = getNum(colIdx.descricao);
-      const total = concluidas + validacao + liberacao + execucao + inicio + descricao;
-      
-      const projeto = {
-        Projeto: getValue(colIdx.projeto),
-        Status: getValue(colIdx.status, "Planejado"),
-        Analista: getValue(colIdx.analista, "N/A"),
-        DataPrevista: getValue(colIdx.dataPrevista, "-"),
-        Concluidas: concluidas,
-        Validacao: validacao,
-        Liberacao: liberacao,
-        Execucao: execucao,
-        Inicio: inicio,
-        Descricao: descricao,
-        Total: total,
-        Obs: getValue(colIdx.obs, "Sem observações.")
-      };
-      
-      // Log detalhado do primeiro projeto e de "Segurança de Pagamento"
-      if (i === 1 || projeto.Projeto.toLowerCase().includes('seguranca')) {
-        debugLog(`📦 Projeto: ${projeto.Projeto}`, 'info');
-        debugLog(`   Concluídas: ${concluidas}, Validação: ${validacao}, Liberação: ${liberacao}`, 'info');
-        debugLog(`   Execução: ${execucao}, Início: ${inicio}, Descrição: ${descricao}`, 'info');
-        debugLog(`   Total: ${total}`, 'info');
-      }
-      
-      projectData.push(projeto);
-    }
-    
-    debugLog(`✅ ${projectData.length} projetos carregados!`, 'success');
-    
-    populateSelects();
+    populateFilters();
+    populateTableFilters(); // NOVO: popular filtros da tabela
     renderAll();
-    
-    debugLog('🎉 Dashboard renderizado!', 'success');
-    
-  } catch (error) {
-    debugLog(`❌ ERRO: ${error.message}`, 'error');
-    
-    let msg = `Erro ao carregar dados:\n\n${error.message}\n\n`;
-    
-    if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-      msg += '🔒 SOLUÇÕES:\n\n';
-      msg += '1. Verifique se a planilha está publicada\n';
-      msg += '2. Vá em Arquivo > Compartilhar > Publicar na web\n';
-      msg += '3. Selecione a aba correta e formato CSV\n';
-      msg += '4. Clique em "Publicar"\n';
-      msg += '5. Use a URL gerada\n';
-    }
-    
-    alert(msg);
+  } catch (err) {
+    debugLog(`❌ Erro ao buscar dados: ${err.message}`, 'error');
   } finally {
-    loadingEl.style.display = 'none';
-    if (refreshIcon) refreshIcon.classList.remove('spinning');
+    icon.classList.remove('spinning');
   }
 }
 
-function populateSelects() {
-  // Populate project select (Curva S)
-  const projectSelect = document.getElementById('projectSelect');
-  projectSelect.innerHTML = '<option value="all">Visão Geral</option>';
-  
-  // Populate analista select
-  const analistaSelect = document.getElementById('analistaSelect');
-  analistaSelect.innerHTML = '<option value="all">Todos os Analistas</option>';
-  
+// ========== POPULAR FILTROS ==========
+function populateFilters() {
   const analistas = [...new Set(projectData.map(p => p.Analista))].sort();
+  const projetos = [...new Set(projectData.map(p => p.Projeto))].sort();
   
-  projectData.forEach(p => {
-    const opt = document.createElement('option');
-    opt.value = p.Projeto;
-    opt.textContent = p.Projeto;
-    projectSelect.appendChild(opt);
-  });
+  const analistaSelect = document.getElementById('analistaSelect');
+  analistaSelect.innerHTML = '<option value="all">Todos os Analistas</option>' + 
+    analistas.map(a => `<option value="${a}">${a}</option>`).join('');
   
-  analistas.forEach(a => {
-    const opt = document.createElement('option');
-    opt.value = a;
-    opt.textContent = a;
-    analistaSelect.appendChild(opt);
-  });
+  const projectSelect = document.getElementById('projectSelect');
+  projectSelect.innerHTML = '<option value="all">Visão Geral</option>' + 
+    projetos.map(p => `<option value="${p}">${p}</option>`).join('');
+  
+  debugLog('✅ Filtros de gráficos populados', 'success');
 }
 
-// ========== FILTROS ==========
-function filterByAnalista(analista) {
-  currentFilters.analista = currentFilters.analista === analista ? null : analista;
-  updateFilters();
+// ========== NOVO: POPULAR FILTROS DA TABELA ==========
+function populateTableFilters() {
+  const projetos = [...new Set(projectData.map(p => p.Projeto))].sort();
+  const analistas = [...new Set(projectData.map(p => p.Analista))].sort();
+  const status = [...new Set(projectData.map(p => p.Status))].sort();
+  
+  const projectFilter = document.getElementById('tableProjectFilter');
+  projectFilter.innerHTML = '<option value="">Todos os Projetos</option>' + 
+    projetos.map(p => `<option value="${p}">${p}</option>`).join('');
+  
+  const analistaFilter = document.getElementById('tableAnalistaFilter');
+  analistaFilter.innerHTML = '<option value="">Todos os Analistas</option>' + 
+    analistas.map(a => `<option value="${a}">${a}</option>`).join('');
+  
+  const statusFilter = document.getElementById('tableStatusFilter');
+  statusFilter.innerHTML = '<option value="">Todos os Status</option>' + 
+    status.map(s => `<option value="${s}">${s}</option>`).join('');
+  
+  debugLog('✅ Filtros da tabela populados', 'success');
 }
 
-function filterByStatus(status) {
-  if (status === 'all') {
-    currentFilters.status = null;
-  } else {
-    currentFilters.status = currentFilters.status === status ? null : status;
+// ========== NOVO: APLICAR FILTROS DA TABELA ==========
+function applyTableFilters() {
+  tableFilters.projeto = document.getElementById('tableProjectFilter').value;
+  tableFilters.analista = document.getElementById('tableAnalistaFilter').value;
+  tableFilters.status = document.getElementById('tableStatusFilter').value;
+  
+  debugLog(`🔍 Filtros da tabela aplicados: ${JSON.stringify(tableFilters)}`, 'info');
+  
+  // Atualizar aparência dos selects
+  updateFilterSelectsAppearance();
+  
+  // Mostrar/ocultar botão de limpar
+  const hasFilters = tableFilters.projeto || tableFilters.analista || tableFilters.status;
+  document.getElementById('btnClearTableFilters').style.display = hasFilters ? 'flex' : 'none';
+  
+  renderTable(getTableFilteredData());
+}
+
+// ========== NOVO: ATUALIZAR APARÊNCIA DOS SELECTS ==========
+function updateFilterSelectsAppearance() {
+  const projectSelect = document.getElementById('tableProjectFilter');
+  const analistaSelect = document.getElementById('tableAnalistaFilter');
+  const statusSelect = document.getElementById('tableStatusFilter');
+  
+  projectSelect.classList.toggle('active', tableFilters.projeto !== '');
+  analistaSelect.classList.toggle('active', tableFilters.analista !== '');
+  statusSelect.classList.toggle('active', tableFilters.status !== '');
+}
+
+// ========== NOVO: LIMPAR FILTROS DA TABELA ==========
+function clearTableFilters() {
+  tableFilters = { projeto: '', analista: '', status: '' };
+  
+  document.getElementById('tableProjectFilter').value = '';
+  document.getElementById('tableAnalistaFilter').value = '';
+  document.getElementById('tableStatusFilter').value = '';
+  
+  updateFilterSelectsAppearance();
+  document.getElementById('btnClearTableFilters').style.display = 'none';
+  
+  renderTable(getFilteredData());
+  
+  debugLog('🧹 Filtros da tabela limpos', 'info');
+}
+
+// ========== NOVO: OBTER DADOS FILTRADOS DA TABELA ==========
+function getTableFilteredData() {
+  let filtered = getFilteredData(); // Aplica os filtros gerais primeiro
+  
+  if (tableFilters.projeto) {
+    filtered = filtered.filter(p => p.Projeto === tableFilters.projeto);
   }
-  updateFilters();
+  if (tableFilters.analista) {
+    filtered = filtered.filter(p => p.Analista === tableFilters.analista);
+  }
+  if (tableFilters.status) {
+    filtered = filtered.filter(p => p.Status === tableFilters.status);
+  }
+  
+  return filtered;
+}
+
+// ========== FILTROS GERAIS ==========
+function filterByStatus(status) {
+  debugLog(`🎯 Filtro de status selecionado: ${status || 'todos'}`, 'info');
+  currentFilters.status = status;
+  updateFiltersUI();
+  renderAll();
 }
 
 function clearAllFilters() {
+  debugLog('🧹 Limpando todos os filtros gerais', 'info');
   currentFilters = { analista: null, status: null };
-  document.getElementById('projectSelect').value = 'all';
-  document.getElementById('analistaSelect').value = 'all';
-  updateFilters();
-  scrollToTop();
-}
-
-function updateFilters() {
+  
+  const analistaSelect = document.getElementById('analistaSelect');
+  if (analistaSelect) analistaSelect.value = 'all';
+  
+  updateFiltersUI();
   renderAll();
-  updateFilterDisplay();
-  if (currentFilters.analista || currentFilters.status) {
-    setTimeout(() => {
-      document.querySelector('.table-box')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300);
-  }
 }
 
-function updateFilterDisplay() {
+function updateFiltersUI() {
   const activeFiltersEl = document.getElementById('activeFilters');
-  const filterTagsEl = document.getElementById('filterTags');
   const btnClear = document.getElementById('btnClearFilters');
   
   const hasFilters = currentFilters.analista || currentFilters.status;
   
   if (hasFilters) {
+    const tags = [];
+    if (currentFilters.analista) {
+      tags.push(`<span class="filter-tag">Analista: ${currentFilters.analista}</span>`);
+    }
+    if (currentFilters.status) {
+      const statusText = currentFilters.status === 'andamento' ? 'Em Andamento' : 
+                        currentFilters.status === 'paralisado' ? 'Paralisado' : 
+                        'Ag. Cliente';
+      tags.push(`<span class="filter-tag">Status: ${statusText}</span>`);
+    }
+    activeFiltersEl.innerHTML = '<span class="filter-label">Filtros ativos:</span>' + tags.join('');
     activeFiltersEl.style.display = 'flex';
     btnClear.style.display = 'flex';
-    
-    let tags = '';
-    if (currentFilters.analista) tags += `<span class="filter-tag">Analista: ${currentFilters.analista}</span>`;
-    if (currentFilters.status) {
-      const labels = { andamento: 'Em Andamento', paralisado: 'Paralisado', cliente: 'Ag. Cliente' };
-      tags += `<span class="filter-tag">Status: ${labels[currentFilters.status] || currentFilters.status}</span>`;
-    }
-    filterTagsEl.innerHTML = tags;
   } else {
     activeFiltersEl.style.display = 'none';
     btnClear.style.display = 'none';
@@ -1409,7 +1160,7 @@ function getFilteredData() {
 // ========== RENDER ==========
 function renderAll() {
   const filtered = getFilteredData();
-  renderTable(filtered);
+  renderTable(getTableFilteredData()); // MODIFICADO: usar dados filtrados da tabela
   renderKPIs(projectData);
   renderCharts(filtered);
 }
@@ -1426,7 +1177,6 @@ function renderTable(p) {
     const statusClass = cleanKey(x.Status).replace(/\./g, "").replace(/\s/g, '-');
     const analistaClass = getAnalistaClass(x.Analista);
     
-    // Escapar aspas para o onclick
     const projetoEscaped = x.Projeto.replace(/'/g, "\\'").replace(/`/g, "\\`");
     
     return `<tr>
@@ -1453,10 +1203,7 @@ function renderCharts(p) {
     return;
   }
   
-  // Renderizar Status Chart
   renderStatusChart(p);
-  
-  // Renderizar outros gráficos
   updateAnalistaChart();
   updateCurvaS();
 }
@@ -1467,10 +1214,8 @@ function renderStatusChart(p) {
     statusCount[x.Status] = (statusCount[x.Status] || 0) + 1;
   });
   
-  // Destruir o gráfico de status antes de recriá-lo
   destroyChart('status');
   
-  // Status Chart
   const statusLabels = Object.keys(statusCount);
   const statusColors = statusLabels.map(s => getStatusColor(s));
   
@@ -1504,21 +1249,18 @@ function updateAnalistaChart() {
   const select = document.getElementById('analistaSelect');
   const selectedAnalista = select.value;
   
-  // Se selecionou um analista específico E o filtro atual é diferente
   if (selectedAnalista !== 'all' && currentFilters.analista !== selectedAnalista) {
     currentFilters.analista = selectedAnalista;
-    renderAll(); // Isso vai chamar updateAnalistaChart novamente, mas com o filtro já aplicado
+    renderAll();
     return;
   }
   
-  // Se voltou para "Todos" E havia um filtro de analista
   if (selectedAnalista === 'all' && currentFilters.analista) {
     currentFilters.analista = null;
     renderAll();
     return;
   }
   
-  // Renderizar o gráfico normalmente
   let dataToShow = getFilteredData();
   
   const analistasCount = {};
@@ -1529,7 +1271,6 @@ function updateAnalistaChart() {
   const analistaLabels = Object.keys(analistasCount);
   const analistaColors = analistaLabels.map(n => getAnalistaColor(n));
   
-  // Destruir o gráfico de analistas antes de recriá-lo
   destroyChart('analistas');
   
   const analistasCanvas = document.getElementById('analistas');
@@ -1600,7 +1341,6 @@ function updateCurvaS() {
     }
   }
   
-  // Destruir o gráfico de curva S antes de recriá-lo
   destroyChart('curve');
   
   const curveCanvas = document.getElementById('curve');
