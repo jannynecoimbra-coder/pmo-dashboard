@@ -973,29 +973,57 @@ function destroyAllCharts() {
 // ========== FETCH DATA ==========
 async function fetchData() {
   const icon = document.getElementById('refreshIcon');
-  icon.classList.add('spinning');
+  if (icon) icon.classList.add('spinning');
   
   debugLog('🔄 Iniciando busca de dados...', 'info');
   
   try {
+    debugLog('📡 Fazendo requisição para API...', 'info');
     const response = await fetch("https://script.google.com/macros/s/AKfycbwBDw-TLmRvqC8Vd7q3yxE_B6hb0i3vPWqgWZqy4U8mBVTdJC1_O7UKXDOlW3DXxKo/exec");
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    debugLog('📥 Resposta recebida, parseando JSON...', 'info');
     const json = await response.json();
     
+    debugLog(`📦 JSON parseado: ${JSON.stringify(json).substring(0, 100)}...`, 'info');
+    
     if (!json.data || json.data.length === 0) {
-      debugLog('⚠️ Nenhum dado encontrado', 'warning');
+      debugLog('⚠️ Nenhum dado encontrado na resposta', 'warning');
       return;
     }
     
     projectData = json.data;
     debugLog(`✅ ${projectData.length} projetos carregados`, 'success');
     
+    debugLog('🔧 Populando filtros...', 'info');
     populateFilters();
     populateTableFilters(); // NOVO: popular filtros da tabela
+    
+    debugLog('🎨 Renderizando interface...', 'info');
     renderAll();
+    
+    debugLog('🎉 Tudo carregado com sucesso!', 'success');
   } catch (err) {
     debugLog(`❌ Erro ao buscar dados: ${err.message}`, 'error');
+    console.error('Erro completo:', err);
+    
+    // Mostrar erro na tabela
+    const tb = document.getElementById("tbody");
+    if (tb) {
+      tb.innerHTML = `<tr><td colspan="6"><div class="no-results">
+        <i class="fa-solid fa-triangle-exclamation" style="color: var(--red);"></i>
+        <h3>Erro ao carregar dados</h3>
+        <p style="margin-top:8px;font-size:13px;color:var(--red)">${err.message}</p>
+        <button onclick="fetchData()" style="margin-top:16px;padding:8px 16px;background:var(--blue);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">
+          <i class="fa-solid fa-rotate"></i> Tentar Novamente
+        </button>
+      </div></td></tr>`;
+    }
   } finally {
-    icon.classList.remove('spinning');
+    if (icon) icon.classList.remove('spinning');
   }
 }
 
@@ -1017,23 +1045,35 @@ function populateFilters() {
 
 // ========== NOVO: POPULAR FILTROS DA TABELA ==========
 function populateTableFilters() {
-  const projetos = [...new Set(projectData.map(p => p.Projeto))].sort();
-  const analistas = [...new Set(projectData.map(p => p.Analista))].sort();
-  const status = [...new Set(projectData.map(p => p.Status))].sort();
-  
-  const projectFilter = document.getElementById('tableProjectFilter');
-  projectFilter.innerHTML = '<option value="">Todos os Projetos</option>' + 
-    projetos.map(p => `<option value="${p}">${p}</option>`).join('');
-  
-  const analistaFilter = document.getElementById('tableAnalistaFilter');
-  analistaFilter.innerHTML = '<option value="">Todos os Analistas</option>' + 
-    analistas.map(a => `<option value="${a}">${a}</option>`).join('');
-  
-  const statusFilter = document.getElementById('tableStatusFilter');
-  statusFilter.innerHTML = '<option value="">Todos os Status</option>' + 
-    status.map(s => `<option value="${s}">${s}</option>`).join('');
-  
-  debugLog('✅ Filtros da tabela populados', 'success');
+  try {
+    const projetos = [...new Set(projectData.map(p => p.Projeto))].sort();
+    const analistas = [...new Set(projectData.map(p => p.Analista))].sort();
+    const status = [...new Set(projectData.map(p => p.Status))].sort();
+    
+    debugLog(`📋 Populando filtros: ${projetos.length} projetos, ${analistas.length} analistas, ${status.length} status`, 'info');
+    
+    const projectFilter = document.getElementById('tableProjectFilter');
+    if (projectFilter) {
+      projectFilter.innerHTML = '<option value="">Todos</option>' + 
+        projetos.map(p => `<option value="${p}">${p}</option>`).join('');
+    }
+    
+    const analistaFilter = document.getElementById('tableAnalistaFilter');
+    if (analistaFilter) {
+      analistaFilter.innerHTML = '<option value="">Todos</option>' + 
+        analistas.map(a => `<option value="${a}">${a}</option>`).join('');
+    }
+    
+    const statusFilter = document.getElementById('tableStatusFilter');
+    if (statusFilter) {
+      statusFilter.innerHTML = '<option value="">Todos</option>' + 
+        status.map(s => `<option value="${s}">${s}</option>`).join('');
+    }
+    
+    debugLog('✅ Filtros da tabela populados com sucesso', 'success');
+  } catch (err) {
+    debugLog(`❌ Erro ao popular filtros da tabela: ${err.message}`, 'error');
+  }
 }
 
 // ========== NOVO: APLICAR FILTROS DA TABELA ==========
@@ -1159,10 +1199,18 @@ function getFilteredData() {
 
 // ========== RENDER ==========
 function renderAll() {
-  const filtered = getFilteredData();
-  renderTable(getTableFilteredData()); // MODIFICADO: usar dados filtrados da tabela
-  renderKPIs(projectData);
-  renderCharts(filtered);
+  try {
+    const filtered = getFilteredData();
+    debugLog(`📊 Renderizando: ${filtered.length} projetos após filtros gerais`, 'info');
+    
+    renderTable(getTableFilteredData()); // MODIFICADO: usar dados filtrados da tabela
+    renderKPIs(projectData);
+    renderCharts(filtered);
+    
+    debugLog('✅ Renderização completa', 'success');
+  } catch (err) {
+    debugLog(`❌ Erro na renderização: ${err.message}`, 'error');
+  }
 }
 
 function renderTable(p) {
